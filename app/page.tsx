@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import {
   Zap, Link2, Brain, Globe,
-  Truck, Package, BarChart3, Users,
+  Truck, Building2, ShoppingCart, Briefcase, BarChart3, Users,
   ArrowLeft, Bot, Workflow, AppWindow, TrendingUp, Lightbulb,
   CheckCircle, Lock
 } from "lucide-react";
@@ -67,7 +67,7 @@ function HeroSection() {
           <span style={{ color: "#00A3FF" }} className="text-glow">الأنظمة.</span>
         </h1>
         <p className="hero-sub text-base md:text-lg mb-8 leading-relaxed" style={{ color: "rgba(240,244,255,0.6)", opacity: 0, maxWidth: "540px" }}>
-          وكالة أتمتة بعقود سنوية | نبني البنية التحتية التي تعمل عليها شركتك
+          وكالة أتمتة بعقود سنوية | نبني البنية التشغيلية الرقمية لشركات B2B في المملكة العربية السعودية
         </p>
         <div className="flex flex-wrap gap-4 justify-end">
           <Link href="/services" className="hero-cta btn-outline" style={{ opacity: 0 }}>
@@ -313,26 +313,30 @@ function WhyStaySection() {
   return (
     <section ref={ref} className="py-24 px-6" style={{ background: "linear-gradient(135deg, #003070 0%, #0050A0 50%, #002850 100%)" }}>
       <div className="max-w-5xl mx-auto text-center">
-        <p className="text-sm mb-3" style={{ color: "rgba(240,244,255,0.6)", fontFamily: "IBM Plex Mono" }}>لماذا يبقى العملاء</p>
-        <h2 className="text-3xl md:text-5xl font-bold mb-12">بحلول الشهر الثالث...</h2>
+        <p className="text-sm mb-3" style={{ color: "rgba(240,244,255,0.6)", fontFamily: "IBM Plex Mono" }}>ما يحدث بعد ٩٠ يوماً</p>
+        <h2 className="text-3xl md:text-5xl font-bold mb-4">شركتك تتحرك بسرعة مختلفة</h2>
+        <p className="text-base mb-12 max-w-2xl mx-auto" style={{ color: "rgba(240,244,255,0.6)" }}>
+          خلال ٩٠ يوماً من بدء العمل، ترى فريقك يركز على ما يهم — لا على المهام المتكررة.
+        </p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
           {[
-            { icon: Link2, text: "تواصلك يعمل عبر أنظمتنا" },
-            { icon: Users, text: "توليد عملائك يعمل عبر أنظمتنا" },
-            { icon: BarChart3, text: "تقاريرك وعملياتك تعمل عبر أنظمتنا" },
+            { icon: Zap, title: "فريق أسرع وأكثر تركيزاً", text: "المهام اليدوية المتكررة تختفي — فريقك يركز على القرارات والنمو." },
+            { icon: Users, title: "عملاء جدد بشكل منتظم", text: "منظومة توليد عملاء تعمل تلقائياً — استفسارات مؤهلة تصلك باستمرار." },
+            { icon: BarChart3, title: "رؤية كاملة على الأداء", text: "تقارير وداشبوردات تلقائية تعطيك وضوحاً تاماً لاتخاذ قرارات أسرع." },
           ].map((item, i) => (
-            <div key={i} className="p-8 rounded-[1.5rem] flex flex-col items-center gap-4" style={{ background: "rgba(2,11,25,0.4)", border: "1px solid rgba(240,244,255,0.1)" }}>
+            <div key={i} className="p-8 rounded-[1.5rem] flex flex-col items-center gap-4 text-center" style={{ background: "rgba(2,11,25,0.4)", border: "1px solid rgba(240,244,255,0.1)" }}>
               <div className="w-14 h-14 rounded-2xl flex items-center justify-center" style={{ background: "rgba(0,163,255,0.15)" }}>
                 <item.icon size={26} color="#00A3FF" />
               </div>
-              <p className="text-lg font-semibold">{item.text}</p>
+              <p className="text-lg font-bold">{item.title}</p>
+              <p className="text-sm leading-relaxed" style={{ color: "rgba(240,244,255,0.65)" }}>{item.text}</p>
             </div>
           ))}
         </div>
         <div className="p-6 rounded-2xl inline-block" style={{ background: "rgba(2,11,25,0.5)", border: "1px solid rgba(240,244,255,0.15)" }}>
-          <p className="text-base mb-2" style={{ color: "rgba(240,244,255,0.8)" }}>الخروج من العقد يعني هدم البنية التحتية كاملة.</p>
+          <p className="text-base mb-2" style={{ color: "rgba(240,244,255,0.8)" }}>الأنظمة التي نبنيها تنمو مع شركتك — وتزيد قيمتها مع الوقت.</p>
           <p className="text-sm flex items-center justify-center gap-2" style={{ color: "#00A3FF", fontFamily: "IBM Plex Mono" }}>
-            <Lock size={13} /> الربط ليس تعاقدياً — هو تشغيلي.
+            <Lock size={13} /> استثمار يتضاعف — لا مصروف يتكرر.
           </p>
         </div>
       </div>
@@ -342,10 +346,10 @@ function WhyStaySection() {
 
 // ─── WHO WE SERVE ─────────────────────────────────────────────────────────────
 const sectors = [
-  { icon: Truck, label: "مشغلو الأساطيل" },
-  { icon: Package, label: "شركات الشحن" },
-  { icon: BarChart3, label: "سلاسل التوريد" },
-  { icon: Globe, label: "مزودو 3PL" },
+  { icon: Truck, label: "اللوجستيات والنقل", desc: "أساطيل، شحن، سلاسل توريد" },
+  { icon: Building2, label: "العقارات والتطوير", desc: "مطورون، وسطاء، إدارة أصول" },
+  { icon: ShoppingCart, label: "التوزيع والتجارة", desc: "موزعون، مستوردون، تجار جملة" },
+  { icon: Briefcase, label: "الخدمات المهنية", desc: "استشارات، محاسبة، قانون، هندسة" },
 ];
 
 function WhoWeServeSection() {
@@ -364,17 +368,18 @@ function WhoWeServeSection() {
     <section ref={ref} className="py-24 px-6" style={{ background: "#0A1628" }}>
       <div className="max-w-5xl mx-auto text-center">
         <p className="text-sm mb-3" style={{ color: "#00A3FF", fontFamily: "IBM Plex Mono" }}>من نخدم</p>
-        <h2 className="text-3xl md:text-4xl font-bold mb-4">قطاع اللوجستيات أولاً</h2>
+        <h2 className="text-3xl md:text-4xl font-bold mb-4">شركات B2B ذات العمليات المعقدة</h2>
         <p className="text-base mb-12 max-w-2xl mx-auto" style={{ color: "rgba(240,244,255,0.6)" }}>
-          عمليات معقدة، هوامش ضيقة، قرار تحديث جاهز — هذا هو عميلنا المثالي.
+          عميلنا المثالي: شركة تملك فريقاً متمرساً وعمليات ضخمة — وتعرف أن الأتمتة ستغير مستوى أدائها.
         </p>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {sectors.map((s, i) => (
-            <div key={i} className="sector-card card-hover p-6 rounded-[1.5rem] flex flex-col items-center gap-4" style={{ background: "#020B19", border: "1px solid rgba(0,163,255,0.12)", opacity: 0 }}>
+            <div key={i} className="sector-card card-hover p-6 rounded-[1.5rem] flex flex-col items-center gap-3" style={{ background: "#020B19", border: "1px solid rgba(0,163,255,0.12)", opacity: 0 }}>
               <div className="w-14 h-14 rounded-2xl flex items-center justify-center" style={{ background: "rgba(0,163,255,0.1)" }}>
                 <s.icon size={26} color="#00A3FF" />
               </div>
               <p className="font-semibold text-sm">{s.label}</p>
+              <p className="text-xs" style={{ color: "rgba(240,244,255,0.45)" }}>{s.desc}</p>
             </div>
           ))}
         </div>

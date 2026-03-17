@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef } from "react";
 import Link from "next/link";
-import { Target, Eye, Award, Shield, Truck, ArrowLeft } from "lucide-react";
+import { Target, Eye, Award, Shield, Building2, ArrowLeft } from "lucide-react";
 
 const values = [
   { icon: Eye, title: "شفافية كاملة", desc: "تقارير واضحة، مؤشرات قابلة للقياس، لا مصطلحات مبهمة. تعرف دائماً ما الذي يُبنى وما هي النتيجة." },
@@ -69,13 +69,13 @@ export default function AboutPage() {
           </div>
           <div className="space-y-6 text-base leading-loose" style={{ color: "rgba(240,244,255,0.7)" }}>
             <p>
-              رأينا عشرات الشركات السعودية في قطاع اللوجستيات والـ B2B تعاني من نفس المشكلة: تملك عمليات ضخمة، فرقاً متمرسة، وعملاء محترمين — لكنها تعمل بأدوات متفرقة وعمليات يدوية تستنزف طاقتها.
+              رأينا عشرات الشركات السعودية في قطاعات B2B المختلفة تعاني من نفس المشكلة: تملك عمليات ضخمة، فرقاً متمرسة، وعملاء محترمين — لكنها تعمل بأدوات متفرقة وعمليات يدوية تستنزف طاقتها وتبطّئ نموها.
             </p>
             <p>
-              الحل الموجود في السوق كان إما أدوات جاهزة لا تناسب طبيعة العمل السعودي، أو مشاريع تقنية باهظة تنتهي دون نتائج ملموسة. لم يكن هناك من يبني ويدير ويحسّن باستمرار.
+              الحل الموجود في السوق كان إما أدوات جاهزة لا تناسب طبيعة العمل السعودي، أو مشاريع تقنية باهظة تنتهي دون نتائج ملموسة. لم يكن هناك من يبني ويدير ويحسّن باستمرار بجانب الشركة.
             </p>
             <p>
-              أنشأنا نهر AI لملء هذا الفراغ. نموذجنا بسيط: عقد سنوي يشمل البناء والنشر والإدارة والتحسين المستمر. بحلول الشهر الثالث، تعمل شركتك على بنية تحتية رقمية لا يمكنك تصوّر العمل بدونها.
+              أنشأنا نهر AI لملء هذا الفراغ. نموذجنا بسيط: عقد سنوي يشمل البناء والنشر والإدارة والتحسين المستمر — لأي شركة B2B تريد أن تتحرك أسرع، تخسر أقل، وتنمو بشكل مستدام.
             </p>
           </div>
         </div>
@@ -104,34 +104,34 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Why Logistics */}
+      {/* Why B2B */}
       <section className="py-20 px-6" style={{ background: "linear-gradient(135deg, #001830 0%, #003060 50%, #001830 100%)" }}>
         <div className="max-w-5xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
               <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-6 electric-glow" style={{ background: "rgba(0,163,255,0.15)" }}>
-                <Truck size={30} color="#00A3FF" />
+                <Building2 size={30} color="#00A3FF" />
               </div>
-              <p className="text-sm mb-3" style={{ color: "#00A3FF", fontFamily: "IBM Plex Mono" }}>لماذا اللوجستيات أولاً</p>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">أكثر القطاعات استعداداً للتحول</h2>
+              <p className="text-sm mb-3" style={{ color: "#00A3FF", fontFamily: "IBM Plex Mono" }}>لماذا B2B</p>
+              <h2 className="text-3xl md:text-4xl font-bold mb-6">العمليات المعقدة = أكبر فرصة</h2>
               <div className="space-y-4 text-base leading-relaxed" style={{ color: "rgba(240,244,255,0.7)" }}>
                 <p>
-                  قطاع اللوجستيات في المملكة يعمل بهوامش ضيقة وعمليات معقدة — وهذا بالضبط ما يجعل الأتمتة هنا ذات ROI ضخم وقابل للقياس.
+                  شركات B2B تملك أعمق العمليات وأكثرها تكراراً — وهذا بالضبط ما يجعل الأتمتة هنا ذات ROI ضخم وقابل للقياس بوضوح.
                 </p>
                 <p>
-                  شركات الشحن، مشغلو الأساطيل، وسلاسل التوريد تحتاج تتبعاً لحظياً، تسعيراً آلياً، وتقارير عمليات يومية — كل هذا قابل للأتمتة بالكامل.
+                  سواء كانت شركة لوجستيات، مطوراً عقارياً، موزعاً، أو مكتب استشارات — كل شركة B2B تملك عشرات العمليات اليدوية التي يمكن أتمتتها اليوم.
                 </p>
                 <p>
-                  خبرتنا في هذا القطاع تعني أننا لا نبدأ من الصفر — نأتيك بنماذج مثبتة وعمليات تم اختبارها مع عملاء مشابهين.
+                  نموذجنا يعمل عبر القطاعات لأننا نبني حول طبيعة عمل شركتك تحديداً — لا حلولاً جاهزة تناسب الجميع ولا تناسب أحداً.
                 </p>
               </div>
             </div>
             <div className="space-y-4">
               {[
-                { label: "وثائق شحن آلية", val: "٩٥٪ توفير وقت" },
-                { label: "تسعير فوري للرحلات", val: "٣ ثواني بدلاً من ٣٠ دقيقة" },
-                { label: "تقارير أداء الأسطول", val: "يومية تلقائياً" },
-                { label: "متابعة العملاء", val: "صفر تدخل بشري" },
+                { label: "المهام اليدوية المتكررة", val: "تُلغى بالكامل" },
+                { label: "سرعة الرد على العملاء", val: "فوري ٢٤/٧" },
+                { label: "التقارير والمتابعة", val: "تلقائية بدون جهد" },
+                { label: "تكاليف التشغيل", val: "تنخفض بشكل قابل للقياس" },
               ].map((item, i) => (
                 <div key={i} className="flex items-center justify-between p-5 rounded-xl" style={{ background: "rgba(2,11,25,0.5)", border: "1px solid rgba(0,163,255,0.15)" }}>
                   <span className="text-sm" style={{ color: "rgba(240,244,255,0.7)" }}>{item.label}</span>
