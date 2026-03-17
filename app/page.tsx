@@ -239,56 +239,6 @@ function PhilosophySection() {
   );
 }
 
-// ─── STATS BAR ────────────────────────────────────────────────────────────────
-const statsData = [
-  { value: 50, suffix: "+", label: "عميل B2B" },
-  { value: 100, suffix: "+", label: "نظام أتمتة منشور" },
-  { value: 3, suffix: "", label: "قطاعات مخدومة" },
-  { value: 100, suffix: "٪", label: "عقود سنوية" },
-];
-
-function StatsBar() {
-  const ref = useRef<HTMLElement>(null);
-  const [counts, setCounts] = useState([0, 0, 0, 0]);
-
-  useEffect(() => {
-    const load = async () => {
-      const { gsap } = await import("gsap");
-      const { ScrollTrigger } = await import("gsap/ScrollTrigger");
-      gsap.registerPlugin(ScrollTrigger);
-      ScrollTrigger.create({
-        trigger: ref.current,
-        start: "top 80%",
-        onEnter: () => {
-          statsData.forEach((s, i) => {
-            const obj = { val: 0 };
-            gsap.to(obj, {
-              val: s.value, duration: 2, ease: "power2.out",
-              onUpdate: () => setCounts(prev => { const n = [...prev]; n[i] = Math.round(obj.val); return n; }),
-            });
-          });
-        },
-        once: true,
-      });
-    };
-    load();
-  }, []);
-
-  return (
-    <section ref={ref} className="py-16 px-6" style={{ background: "#0A1628", borderTop: "1px solid rgba(0,163,255,0.1)", borderBottom: "1px solid rgba(0,163,255,0.1)" }}>
-      <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8">
-        {statsData.map((s, i) => (
-          <div key={i} className="text-center">
-            <div className="text-4xl md:text-5xl font-bold mb-2" style={{ color: "#00A3FF", fontFamily: "IBM Plex Mono" }}>
-              {counts[i]}{s.suffix}
-            </div>
-            <p className="text-sm" style={{ color: "rgba(240,244,255,0.55)" }}>{s.label}</p>
-          </div>
-        ))}
-      </div>
-    </section>
-  );
-}
 
 // ─── PACKAGES ─────────────────────────────────────────────────────────────────
 const packages = [
@@ -461,7 +411,6 @@ export default function HomePage() {
       <ProblemSection />
       <WhatWeBuildSection />
       <PhilosophySection />
-      <StatsBar />
       <PackagesSection />
       <WhyStaySection />
       <WhoWeServeSection />
