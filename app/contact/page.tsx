@@ -1,31 +1,34 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { CheckCircle, Phone, MessageSquare, ArrowLeft, Truck, Package, BarChart3, Globe } from "lucide-react";
+import { Send, Bot, User, Phone } from "lucide-react";
 
-type Step = "gate" | "form" | "success";
+type Message = { role: "user" | "assistant"; content: string };
 
-const sectors = [
-  { value: "logistics", label: "لوجستيات وشحن", icon: Truck },
-  { value: "transport", label: "نقل وتوزيع", icon: Package },
-  { value: "supply-chain", label: "سلسلة توريد", icon: BarChart3 },
-  { value: "other", label: "قطاع آخر", icon: Globe },
-];
+function parseQualification(text: string): "qualified" | "not_qualified" | null {
+  if (text.includes("QUALIFIED:") && !text.includes("NOT_QUALIFIED:")) return "qualified";
+  if (text.includes("NOT_QUALIFIED:")) return "not_qualified";
+  return null;
+}
 
-const employeeRanges = ["١٠ - ٥٠ موظف", "٥٠ - ٢٠٠ موظف", "+٢٠٠ موظف"];
+function cleanText(text: string) {
+  return text.replace(/^(NOT_QUALIFIED:|QUALIFIED:).*$/m, "").trim();
+}
 
-const qualifyQuestions = [
-  { q: "هل لديك عمليات يدوية متكررة تريد أتمتتها؟", key: "q1" },
-  { q: "هل تستخدم أكثر من ٣ أدوات تقنية غير مترابطة؟", key: "q2" },
-  { q: "هل قرارك للاستثمار في الذكاء الاصطناعي جاهز؟", key: "q3" },
-];
+// Extract phone number from conversation
+function extractPhone(messages: Message[]): string {
+  const all = messages.map(m => m.content).join(" ");
+  const match = all.match(/(\+?9665\d{8}|05\d{8})/);
+  return match ? match[0] : "";
+}
 
 export default function ContactPage() {
-  const [step, setStep] = useState<Step>("gate");
-  const [answers, setAnswers] = useState<Record<string, boolean | null>>({ q1: null, q2: null, q3: null });
-  const [selectedSector, setSelectedSector] = useState("");
-  const [form, setForm] = useState({ name: "", company: "", sector: "", employees: "", challenge: "", phone: "" });
-  const [submitting, setSubmitting] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [input, setInput] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [qualification, setQualification] = useState<"qualified" | "not_qualified" | null>(null);
+  const [started, setStarted] = useState(false);
+  const bottomRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const load = async () => {
@@ -35,289 +38,231 @@ export default function ContactPage() {
     load();
   }, []);
 
-  const allAnswered = Object.values(answers).every(v => v !== null);
-  const qualified = allAnswered && Object.values(answers).filter(v => v === true).length >= 2;
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages, loading]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setSubmitting(true);
-    await new Promise(r => setTimeout(r, 1500));
-    setSubmitting(false);
-    setStep("success");
+  const startChat = async () => {
+    setStarted(true);
+    setLoading(true);
+    const res = await fetch("/api/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ messages: [{ role: "user", content: "مرحبا" }] }),
+    });
+    const data = await res.json();
+    const text = data.text ?? "مرحباً! كيف أستطيع مساعدتك؟";
+    setMessages([
+      { role: "user", content: "مرحبا" },
+      { role: "assistant", content: text },
+    ]);
+    setLoading(false);
+    setTimeout(() => inputRef.current?.focus(), 100);
   };
 
+  const sendMessage = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!input.trim() || loading) return;
+
+    const userMsg: Message = { role: "user", content: input.trim() };
+    const newMessages = [...messages, userMsg];
+    setMessages(newMessages);
+    setInput("");
+    setLoading(true);
+
+    const res = await fetch("/api/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ messages: newMessages }),
+    });
+    const data = await res.json();
+    const rawText = data.text ?? "عذراً، حدث خطأ. حاول مرة أخرى.";
+
+    const qual = parseQualification(rawText);
+    if (qual) setQualification(qual);
+
+    const cleanedText = cleanText(rawText);
+    setMessages(prev => [...prev, { role: "assistant", content: cleanedText }]);
+    setLoading(false);
+    setTimeout(() => inputRef.current?.focus(), 100);
+  };
+
+  const phone = extractPhone(messages);
+  const waLink = `https://wa.me/966540428191?text=${encodeURIComponent(
+    `مرحبا، أنا عميل محتمل من موقع نهر AI.\n\n${messages.filter(m => m.role === "user").map(m => m.content).join(" | ")}`
+  )}`;
+
   return (
-    <div ref={ref}>
+    <div>
       {/* Hero */}
-      <section className="pt-40 pb-16 px-6 text-center relative overflow-hidden" style={{ background: "linear-gradient(180deg, #020B19 0%, #001830 100%)" }}>
+      <section className="pt-40 pb-12 px-6 text-center relative overflow-hidden" style={{ background: "linear-gradient(180deg, #020B19 0%, #001830 100%)" }}>
         <div className="absolute inset-0 opacity-8 pointer-events-none" style={{ backgroundImage: "radial-gradient(ellipse at center, #00A3FF 0%, transparent 60%)" }} />
         <p className="contact-hero text-sm mb-4 relative z-10" style={{ color: "#00A3FF", fontFamily: "IBM Plex Mono", opacity: 0 }}>تواصل معنا</p>
-        <h1 className="contact-hero text-4xl md:text-5xl font-bold mb-6 relative z-10 leading-tight" style={{ opacity: 0 }}>
-          ابدأ بنية تحتية{" "}
-          <span style={{ color: "#00A3FF" }} className="text-glow">حقيقية</span>
+        <h1 className="contact-hero text-4xl md:text-5xl font-bold mb-4 relative z-10 leading-tight" style={{ opacity: 0 }}>
+          تحدث مع{" "}
+          <span style={{ color: "#00A3FF" }} className="text-glow">مساعد نهر AI</span>
         </h1>
-        <p className="contact-hero text-base md:text-lg max-w-2xl mx-auto relative z-10" style={{ color: "rgba(240,244,255,0.6)", opacity: 0 }}>
-          استشارة مجانية — ٣٠ دقيقة نفهم فيها عملياتك ونريك ما يمكن بناؤه
+        <p className="contact-hero text-base max-w-xl mx-auto relative z-10" style={{ color: "rgba(240,244,255,0.55)", opacity: 0 }}>
+          أخبره عن شركتك وسيساعدك تعرف إذا كنا الخيار الصح لك — ثم نتواصل معك مباشرة.
         </p>
       </section>
 
-      {/* Main content */}
-      <section className="py-16 px-6 min-h-[60vh]" style={{ background: "#020B19" }}>
-        <div className="max-w-2xl mx-auto">
+      {/* Chat */}
+      <section className="py-10 px-4" style={{ background: "#020B19", minHeight: "65vh" }}>
+        <div className="max-w-2xl mx-auto flex flex-col" style={{ height: "65vh" }}>
 
-          {/* ── GATE STEP ── */}
-          {step === "gate" && (
-            <div>
-              <div className="text-center mb-10">
-                <p className="text-sm mb-2" style={{ color: "#00A3FF", fontFamily: "IBM Plex Mono" }}>قبل أن نبدأ</p>
-                <h2 className="text-2xl md:text-3xl font-bold mb-4">٣ أسئلة سريعة</h2>
-                <p className="text-sm" style={{ color: "rgba(240,244,255,0.5)" }}>نريد نتأكد أننا الخيار الصح لشركتك</p>
-              </div>
-
-              <div className="space-y-5 mb-10">
-                {qualifyQuestions.map((item) => (
-                  <div key={item.key} className="p-6 rounded-[1.5rem]" style={{ background: "#0A1628", border: "1px solid rgba(0,163,255,0.15)" }}>
-                    <p className="font-medium mb-4 text-base">{item.q}</p>
-                    <div className="flex gap-3">
-                      <button
-                        onClick={() => setAnswers(prev => ({ ...prev, [item.key]: true }))}
-                        className="flex-1 py-3 rounded-xl font-semibold text-sm transition-all duration-200"
-                        style={{
-                          background: answers[item.key] === true ? "#00A3FF" : "rgba(0,163,255,0.06)",
-                          color: answers[item.key] === true ? "#020B19" : "rgba(240,244,255,0.7)",
-                          border: answers[item.key] === true ? "none" : "1px solid rgba(0,163,255,0.15)",
-                        }}
-                      >
-                        نعم
-                      </button>
-                      <button
-                        onClick={() => setAnswers(prev => ({ ...prev, [item.key]: false }))}
-                        className="flex-1 py-3 rounded-xl font-semibold text-sm transition-all duration-200"
-                        style={{
-                          background: answers[item.key] === false ? "rgba(240,244,255,0.1)" : "rgba(0,163,255,0.06)",
-                          color: answers[item.key] === false ? "#F0F4FF" : "rgba(240,244,255,0.5)",
-                          border: "1px solid rgba(0,163,255,0.1)",
-                        }}
-                      >
-                        لا
-                      </button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              {allAnswered && (
-                <div className="text-center">
-                  {qualified ? (
-                    <div>
-                      <div className="p-6 rounded-2xl mb-6 text-center" style={{ background: "rgba(0,163,255,0.08)", border: "1px solid rgba(0,163,255,0.3)" }}>
-                        <CheckCircle size={32} color="#00A3FF" className="mx-auto mb-3" />
-                        <p className="font-bold text-lg mb-2" style={{ color: "#00A3FF" }}>شركتك مؤهلة تماماً</p>
-                        <p className="text-sm" style={{ color: "rgba(240,244,255,0.6)" }}>نستطيع بناء منظومة أتمتة ستحدث فرقاً حقيقياً</p>
-                      </div>
-                      <button onClick={() => setStep("form")} className="btn-primary text-base py-4 px-10 electric-glow-strong">
-                        <span>أكمل طلب الاستشارة</span>
-                      </button>
-                    </div>
-                  ) : (
-                    <div>
-                      <div className="p-6 rounded-2xl mb-6" style={{ background: "rgba(240,244,255,0.04)", border: "1px solid rgba(240,244,255,0.1)" }}>
-                        <p className="font-medium mb-2">قد لا نكون الحل الأمثل الآن</p>
-                        <p className="text-sm" style={{ color: "rgba(240,244,255,0.5)" }}>
-                          لكن يمكننا التحدث ورؤية إن كان هناك ما يمكن تقديمه لشركتك.
-                        </p>
-                      </div>
-                      <button onClick={() => setStep("form")} className="btn-outline text-base py-4 px-10">
-                        <span>أريد التحدث على أي حال</span>
-                        <ArrowLeft size={16} />
-                      </button>
-                    </div>
-                  )}
+          {/* Chat window */}
+          <div
+            className="flex-1 overflow-y-auto rounded-[1.5rem] p-5 mb-4 space-y-4"
+            style={{ background: "#0A1628", border: "1px solid rgba(0,163,255,0.15)" }}
+          >
+            {/* Start screen */}
+            {!started && (
+              <div className="flex flex-col items-center justify-center h-full text-center gap-6">
+                <div className="w-20 h-20 rounded-2xl flex items-center justify-center electric-glow" style={{ background: "rgba(0,163,255,0.12)", border: "1px solid rgba(0,163,255,0.3)" }}>
+                  <Bot size={38} color="#00A3FF" />
                 </div>
-              )}
+                <div>
+                  <p className="font-bold text-xl mb-2">مساعد نهر AI</p>
+                  <p className="text-sm max-w-xs" style={{ color: "rgba(240,244,255,0.5)" }}>
+                    سيطرح عليك أسئلة قصيرة لفهم وضع شركتك — ثم نقرر معاً إذا كنا الخيار المناسب.
+                  </p>
+                </div>
+                <button onClick={startChat} className="btn-primary px-8 py-3 text-base electric-glow-strong">
+                  <span>ابدأ المحادثة</span>
+                </button>
+              </div>
+            )}
 
-              {/* Sector selector (for visual CTA) */}
-              {!allAnswered && (
-                <div className="mt-12">
-                  <p className="text-center text-sm mb-6" style={{ color: "rgba(240,244,255,0.45)" }}>— أو اختر قطاعك وابدأ مباشرة —</p>
-                  <div className="grid grid-cols-2 gap-3">
-                    {sectors.map((s) => (
-                      <button
-                        key={s.value}
-                        onClick={() => { setSelectedSector(s.value); setStep("form"); setForm(f => ({ ...f, sector: s.label })); }}
-                        className="card-hover p-5 rounded-[1.25rem] flex flex-col items-center gap-3"
-                        style={{ background: "#0A1628", border: "1px solid rgba(0,163,255,0.12)" }}
-                      >
-                        <s.icon size={24} color="#00A3FF" />
-                        <span className="text-sm font-medium">{s.label}</span>
-                      </button>
+            {/* Messages */}
+            {messages.slice(1).map((m, i) => (
+              <div key={i} className={`flex gap-3 ${m.role === "user" ? "flex-row-reverse" : "flex-row"}`}>
+                {/* Avatar */}
+                <div
+                  className="flex-shrink-0 w-9 h-9 rounded-xl flex items-center justify-center mt-1"
+                  style={{ background: m.role === "assistant" ? "rgba(0,163,255,0.15)" : "rgba(240,244,255,0.08)" }}
+                >
+                  {m.role === "assistant"
+                    ? <Bot size={18} color="#00A3FF" />
+                    : <User size={18} color="rgba(240,244,255,0.6)" />
+                  }
+                </div>
+                {/* Bubble */}
+                <div
+                  className="max-w-[80%] px-4 py-3 rounded-2xl text-sm leading-relaxed"
+                  style={{
+                    background: m.role === "assistant" ? "rgba(0,163,255,0.08)" : "rgba(240,244,255,0.07)",
+                    border: m.role === "assistant" ? "1px solid rgba(0,163,255,0.2)" : "1px solid rgba(240,244,255,0.08)",
+                    color: "rgba(240,244,255,0.85)",
+                    borderRadius: m.role === "user" ? "1.25rem 0.4rem 1.25rem 1.25rem" : "0.4rem 1.25rem 1.25rem 1.25rem",
+                  }}
+                >
+                  {m.content}
+                </div>
+              </div>
+            ))}
+
+            {/* Typing indicator */}
+            {loading && started && (
+              <div className="flex gap-3">
+                <div className="flex-shrink-0 w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: "rgba(0,163,255,0.15)" }}>
+                  <Bot size={18} color="#00A3FF" />
+                </div>
+                <div className="px-4 py-3 rounded-2xl" style={{ background: "rgba(0,163,255,0.08)", border: "1px solid rgba(0,163,255,0.2)", borderRadius: "0.4rem 1.25rem 1.25rem 1.25rem" }}>
+                  <div className="flex gap-1 items-center h-5">
+                    {[0, 1, 2].map(i => (
+                      <div key={i} className="w-2 h-2 rounded-full animate-bounce" style={{ background: "#00A3FF", animationDelay: `${i * 0.15}s` }} />
                     ))}
                   </div>
                 </div>
-              )}
-            </div>
-          )}
-
-          {/* ── FORM STEP ── */}
-          {step === "form" && (
-            <div>
-              <div className="flex items-center gap-4 mb-10">
-                <button onClick={() => setStep("gate")} className="p-2 rounded-xl transition-colors" style={{ background: "rgba(0,163,255,0.08)", border: "1px solid rgba(0,163,255,0.15)" }}>
-                  <ArrowLeft size={18} color="#00A3FF" style={{ transform: "rotate(180deg)" }} />
-                </button>
-                <div>
-                  <h2 className="text-2xl font-bold">نموذج الاستشارة المجانية</h2>
-                  <p className="text-sm" style={{ color: "rgba(240,244,255,0.5)" }}>نتواصل معك خلال ٢٤ ساعة</p>
-                </div>
               </div>
+            )}
 
-              <form onSubmit={handleSubmit} className="space-y-5">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                  <div>
-                    <label className="block text-sm font-medium mb-2" style={{ color: "rgba(240,244,255,0.7)" }}>الاسم الكامل *</label>
-                    <input
-                      className="form-input"
-                      placeholder="اسمك الكامل"
-                      required
-                      value={form.name}
-                      onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium mb-2" style={{ color: "rgba(240,244,255,0.7)" }}>اسم الشركة *</label>
-                    <input
-                      className="form-input"
-                      placeholder="اسم شركتك"
-                      required
-                      value={form.company}
-                      onChange={e => setForm(f => ({ ...f, company: e.target.value }))}
-                    />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                  <div>
-                    <label className="block text-sm font-medium mb-2" style={{ color: "rgba(240,244,255,0.7)" }}>القطاع</label>
-                    <select
-                      className="form-input"
-                      value={form.sector}
-                      onChange={e => setForm(f => ({ ...f, sector: e.target.value }))}
-                    >
-                      <option value="">اختر القطاع</option>
-                      <option>لوجستيات وشحن</option>
-                      <option>نقل وتوزيع</option>
-                      <option>سلسلة توريد</option>
-                      <option>أخرى (B2B)</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium mb-2" style={{ color: "rgba(240,244,255,0.7)" }}>عدد الموظفين</label>
-                    <select
-                      className="form-input"
-                      value={form.employees}
-                      onChange={e => setForm(f => ({ ...f, employees: e.target.value }))}
-                    >
-                      <option value="">اختر النطاق</option>
-                      {employeeRanges.map(r => <option key={r}>{r}</option>)}
-                    </select>
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium mb-2" style={{ color: "rgba(240,244,255,0.7)" }}>أكبر تحدي تشغيلي الآن</label>
-                  <textarea
-                    className="form-input resize-none"
-                    rows={4}
-                    placeholder="صف أهم مشكلة تشغيلية تواجهها شركتك..."
-                    value={form.challenge}
-                    onChange={e => setForm(f => ({ ...f, challenge: e.target.value }))}
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium mb-2" style={{ color: "rgba(240,244,255,0.7)" }}>رقم الجوال / واتساب *</label>
-                  <div className="relative">
-                    <input
-                      className="form-input"
-                      placeholder="05xxxxxxxx"
-                      required
-                      type="tel"
-                      value={form.phone}
-                      onChange={e => setForm(f => ({ ...f, phone: e.target.value }))}
-                    />
-                    <Phone size={16} color="rgba(240,244,255,0.3)" className="absolute top-1/2 -translate-y-1/2 left-4" />
-                  </div>
-                </div>
-
-                {/* Trust note */}
-                <div className="p-4 rounded-xl flex gap-3" style={{ background: "rgba(0,163,255,0.05)", border: "1px solid rgba(0,163,255,0.12)" }}>
-                  <MessageSquare size={18} color="#00A3FF" className="flex-shrink-0 mt-0.5" />
-                  <p className="text-xs leading-relaxed" style={{ color: "rgba(240,244,255,0.5)" }}>
-                    نتواصل معك عبر واتساب خلال ٢٤ ساعة لتحديد موعد الاستشارة. لا رسائل تسويقية، لا مبيعات ضاغطة — فقط محادثة صادقة.
-                  </p>
-                </div>
-
-                <button
-                  type="submit"
-                  disabled={submitting}
-                  className="btn-primary w-full justify-center py-4 text-base"
-                  style={{ opacity: submitting ? 0.7 : 1 }}
-                >
-                  <span>{submitting ? "جاري الإرسال..." : "أرسل طلب الاستشارة"}</span>
-                </button>
-              </form>
-            </div>
-          )}
-
-          {/* ── SUCCESS STEP ── */}
-          {step === "success" && (
-            <div className="text-center py-16">
-              <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 electric-glow-strong" style={{ background: "rgba(0,163,255,0.15)", border: "2px solid #00A3FF" }}>
-                <CheckCircle size={40} color="#00A3FF" />
-              </div>
-              <h2 className="text-3xl font-bold mb-4">تم استلام طلبك!</h2>
-              <p className="text-base mb-8 max-w-md mx-auto" style={{ color: "rgba(240,244,255,0.65)" }}>
-                سنتواصل معك عبر واتساب خلال ٢٤ ساعة لتأكيد موعد الاستشارة المجانية.
-              </p>
-              <div className="p-6 rounded-2xl inline-block mb-8" style={{ background: "#0A1628", border: "1px solid rgba(0,163,255,0.2)" }}>
-                <p className="text-sm" style={{ color: "rgba(240,244,255,0.5)", fontFamily: "IBM Plex Mono" }}>
-                  في انتظارك — فريق نهر AI
+            {/* Qualified CTA */}
+            {qualification === "qualified" && (
+              <div className="mt-4 p-5 rounded-2xl text-center" style={{ background: "rgba(0,163,255,0.1)", border: "2px solid rgba(0,163,255,0.4)" }}>
+                <p className="font-bold text-base mb-2" style={{ color: "#00A3FF" }}>🎯 شركتك مؤهلة — نبدأ؟</p>
+                <p className="text-sm mb-4" style={{ color: "rgba(240,244,255,0.65)" }}>
+                  سنتواصل معك عبر واتساب لترتيب استشارة مجانية خلال ٢٤ ساعة.
                 </p>
+                <a
+                  href={waLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-primary inline-flex items-center gap-2 px-8 py-3"
+                >
+                  <Phone size={17} />
+                  <span>تواصل معنا عبر واتساب</span>
+                </a>
               </div>
-              <div className="flex flex-wrap gap-4 justify-center">
-                <a href="/" className="btn-primary py-3 px-8">
+            )}
+
+            {qualification === "not_qualified" && (
+              <div className="mt-4 p-5 rounded-2xl text-center" style={{ background: "rgba(240,244,255,0.04)", border: "1px solid rgba(240,244,255,0.12)" }}>
+                <p className="font-bold text-base mb-2">شكراً لوقتك</p>
+                <p className="text-sm mb-4" style={{ color: "rgba(240,244,255,0.55)" }}>
+                  يبدو أننا لسنا الخيار المناسب الآن — لكن إذا تغير الوضع، نحن هنا.
+                </p>
+                <a href="/" className="btn-outline inline-flex px-8 py-3">
                   <span>العودة للرئيسية</span>
                 </a>
-                <a href="/services" className="btn-outline py-3 px-8">
-                  <span>استكشف خدماتنا</span>
-                  <ArrowLeft size={16} />
-                </a>
               </div>
-            </div>
+            )}
+
+            <div ref={bottomRef} />
+          </div>
+
+          {/* Input */}
+          {started && !qualification && (
+            <form onSubmit={sendMessage} className="flex gap-3">
+              <input
+                ref={inputRef}
+                value={input}
+                onChange={e => setInput(e.target.value)}
+                placeholder="اكتب ردك هنا..."
+                disabled={loading}
+                className="flex-1 px-5 py-3 rounded-2xl text-sm outline-none transition-all"
+                style={{
+                  background: "#0A1628",
+                  border: "1px solid rgba(0,163,255,0.2)",
+                  color: "#F0F4FF",
+                  direction: "rtl",
+                }}
+              />
+              <button
+                type="submit"
+                disabled={loading || !input.trim()}
+                className="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0 transition-all"
+                style={{
+                  background: input.trim() && !loading ? "#00A3FF" : "rgba(0,163,255,0.15)",
+                  boxShadow: input.trim() && !loading ? "0 0 20px rgba(0,163,255,0.4)" : "none",
+                }}
+              >
+                <Send size={18} color={input.trim() && !loading ? "#020B19" : "rgba(240,244,255,0.3)"} style={{ transform: "rotate(180deg)" }} />
+              </button>
+            </form>
           )}
         </div>
       </section>
 
-      {/* Bottom trust signals */}
-      {step !== "success" && (
-        <section className="py-16 px-6" style={{ background: "#0A1628" }}>
-          <div className="max-w-4xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
-              {[
-                { icon: "⚡", title: "رد خلال ٢٤ ساعة", desc: "نتواصل معك عبر واتساب بسرعة" },
-                { icon: "🎯", title: "استشارة مخصصة", desc: "نحلل عمليات شركتك تحديداً" },
-                { icon: "🔒", title: "بدون التزام", desc: "الاستشارة الأولى مجانية تماماً" },
-              ].map((item, i) => (
-                <div key={i} className="p-6 rounded-[1.5rem]" style={{ background: "#020B19", border: "1px solid rgba(0,163,255,0.1)" }}>
-                  <div className="text-3xl mb-3">{item.icon}</div>
-                  <h3 className="font-bold mb-2">{item.title}</h3>
-                  <p className="text-sm" style={{ color: "rgba(240,244,255,0.5)" }}>{item.desc}</p>
-                </div>
-              ))}
-            </div>
+      {/* Trust signals */}
+      <section className="py-14 px-6" style={{ background: "#0A1628" }}>
+        <div className="max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 text-center">
+            {[
+              { icon: "⚡", title: "رد خلال ٢٤ ساعة", desc: "نتواصل معك عبر واتساب بسرعة" },
+              { icon: "🎯", title: "استشارة مخصصة", desc: "نحلل عمليات شركتك تحديداً" },
+              { icon: "🔒", title: "بدون التزام", desc: "الاستشارة الأولى مجانية تماماً" },
+            ].map((item, i) => (
+              <div key={i} className="p-6 rounded-[1.5rem]" style={{ background: "#020B19", border: "1px solid rgba(0,163,255,0.1)" }}>
+                <div className="text-3xl mb-3">{item.icon}</div>
+                <h3 className="font-bold mb-2">{item.title}</h3>
+                <p className="text-sm" style={{ color: "rgba(240,244,255,0.5)" }}>{item.desc}</p>
+              </div>
+            ))}
           </div>
-        </section>
-      )}
+        </div>
+      </section>
     </div>
   );
 }
