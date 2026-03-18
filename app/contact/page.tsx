@@ -9,6 +9,7 @@ export default function ContactPage() {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [started, setStarted] = useState(false);
+  const sessionId = useRef(`session_${Date.now()}_${Math.random().toString(36).slice(2)}`);
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -30,7 +31,7 @@ export default function ContactPage() {
     const res = await fetch("/api/chat", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ message: userMessage, history }),
+      body: JSON.stringify({ message: userMessage, history, sessionId: sessionId.current }),
     });
     const data = await res.json();
     return data.reply as string;
