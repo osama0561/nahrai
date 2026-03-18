@@ -3,7 +3,7 @@ export const runtime = "edge";
 export async function POST(req: Request) {
   try {
     const { messages } = await req.json();
-    const GEMINI_API_KEY = process.env.GEMINI_API_KEY || "AIzaSyCvakkZS6Zu_ttxKEv0W2Xd3XptANQqY3g";
+    const GEMINI_API_KEY = process.env.GEMINI_API_KEY || "AIzaSyBMLcdHIaB3fJxrHH0sUFx01atm4FXstdc";
 
     const systemPrompt = [
       "You are a helpful assistant for Nahr AI, a B2B automation agency in Saudi Arabia.",
