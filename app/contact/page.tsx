@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { Send, Bot, User } from "lucide-react";
+import { Send, Bot, User, Phone } from "lucide-react";
 
 type Message = { role: "user" | "assistant"; content: string };
 
@@ -9,8 +9,8 @@ export default function ContactPage() {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [started, setStarted] = useState(false);
+  const [done, setDone] = useState<"qualified" | "not_qualified" | null>(null);
   const sessionId = useRef(`session_${Date.now()}_${Math.random().toString(36).slice(2)}`);
-  const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -21,23 +21,21 @@ export default function ContactPage() {
     load();
   }, []);
 
-
   const sendToN8n = async (userMessage: string, history: Message[]) => {
     const res = await fetch("/api/chat", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ message: userMessage, history, sessionId: sessionId.current }),
     });
-    const data = await res.json();
-    return data.reply as string;
+    return await res.json() as { reply: string; qualified?: boolean | null };
   };
 
   const startChat = async () => {
     setStarted(true);
     setLoading(true);
     try {
-      const reply = await sendToN8n("بدء المحادثة", []);
-      setMessages([{ role: "assistant", content: reply }]);
+      const data = await sendToN8n("start", []);
+      setMessages([{ role: "assistant", content: data.reply }]);
     } catch {
       setMessages([{ role: "assistant", content: "مرحباً! أنا مساعد نهر AI. كيف يمكنني مساعدتك؟" }]);
     }
@@ -47,7 +45,7 @@ export default function ContactPage() {
 
   const sendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!input.trim() || loading) return;
+    if (!input.trim() || loading || done) return;
 
     const userMsg: Message = { role: "user", content: input.trim() };
     const updatedHistory = [...messages, userMsg];
@@ -56,8 +54,10 @@ export default function ContactPage() {
     setLoading(true);
 
     try {
-      const reply = await sendToN8n(userMsg.content, updatedHistory);
-      setMessages(prev => [...prev, { role: "assistant", content: reply }]);
+      const data = await sendToN8n(userMsg.content, updatedHistory);
+      setMessages(prev => [...prev, { role: "assistant", content: data.reply }]);
+      if (data.qualified === true) setDone("qualified");
+      else if (data.qualified === false) setDone("not_qualified");
     } catch {
       setMessages(prev => [...prev, { role: "assistant", content: "عذراً، حدث خطأ في الاتصال. حاول مرة أخرى." }]);
     }
@@ -146,11 +146,28 @@ export default function ContactPage() {
               </div>
             )}
 
-            <div ref={bottomRef} />
+            {/* Qualified CTA */}
+            {done === "qualified" && (
+              <div className="mt-2 p-5 rounded-2xl text-center" style={{ background: "rgba(0,163,255,0.1)", border: "2px solid rgba(0,163,255,0.4)" }}>
+                <p className="font-bold text-base mb-2" style={{ color: "#00A3FF" }}>🎯 شركتك مؤهلة</p>
+                <p className="text-sm mb-4" style={{ color: "rgba(240,244,255,0.65)" }}>سنتواصل معك عبر واتساب خلال ٢٤ ساعة.</p>
+                <a href="https://wa.me/966540428191" target="_blank" rel="noopener noreferrer" className="btn-primary inline-flex items-center gap-2 px-8 py-3">
+                  <Phone size={16} />
+                  <span>تواصل معنا مباشرة</span>
+                </a>
+              </div>
+            )}
+
+            {done === "not_qualified" && (
+              <div className="mt-2 p-5 rounded-2xl text-center" style={{ background: "rgba(240,244,255,0.04)", border: "1px solid rgba(240,244,255,0.12)" }}>
+                <p className="font-bold text-base mb-2">شكراً لوقتك</p>
+                <p className="text-sm" style={{ color: "rgba(240,244,255,0.5)" }}>إذا تغير الوضع، نحن هنا.</p>
+              </div>
+            )}
           </div>
 
-          {/* Input */}
-          {started && (
+          {/* Input — disabled after done */}
+          {started && !done && (
             <form onSubmit={sendMessage} className="flex gap-3">
               <input
                 ref={inputRef}
