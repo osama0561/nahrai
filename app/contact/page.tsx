@@ -21,11 +21,6 @@ export default function ContactPage() {
     load();
   }, []);
 
-  useEffect(() => {
-    if (messages.length > 0) {
-      bottomRef.current?.scrollIntoView({ behavior: "instant" });
-    }
-  }, [messages, loading]);
 
   const sendToN8n = async (userMessage: string, history: Message[]) => {
     const res = await fetch("/api/chat", {
