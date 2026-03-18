@@ -1,4 +1,4 @@
-export const runtime = "edge";
+export const runtime = "nodejs";
 
 const N8N_WEBHOOK = "https://n8n.srv1200431.hstgr.cloud/webhook/9575a2cd-a292-4b85-a0d7-a7550a123ed9";
 
