@@ -5,13 +5,16 @@ import { Send, Bot, User, Phone } from "lucide-react";
 type Message = { role: "user" | "assistant"; content: string };
 
 function parseQualification(text: string): "qualified" | "not_qualified" | null {
-  if (text.includes("QUALIFIED:") && !text.includes("NOT_QUALIFIED:")) return "qualified";
-  if (text.includes("NOT_QUALIFIED:")) return "not_qualified";
-  return null;
+  const match = text.match(/\{[^}]*"qualified"[^}]*\}/s);
+  if (!match) return null;
+  try {
+    const data = JSON.parse(match[0]);
+    return data.qualified ? "qualified" : "not_qualified";
+  } catch { return null; }
 }
 
 function cleanText(text: string) {
-  return text.replace(/^(NOT_QUALIFIED:|QUALIFIED:).*$/m, "").trim();
+  return text.replace(/\{[^}]*"qualified"[^}]*\}/s, "").trim();
 }
 
 // Extract phone number from conversation
