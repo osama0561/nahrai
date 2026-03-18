@@ -1,87 +1,49 @@
 export const runtime = "edge";
 
-const SYSTEM_PROMPT = `أنت مساعد ذكي لشركة "نهر AI" — وكالة أتمتة بالذكاء الاصطناعي تخدم شركات B2B في المملكة العربية السعودية.
-
-مهمتك: إجراء محادثة ودية واحترافية لتأهيل العميل المحتمل وجمع معلوماته الأساسية.
-
-== معلومات عن نهر AI ==
-- نبني ونشر وندير البنية التشغيلية الرقمية لشركات B2B بعقود سنوية
-- خدماتنا: وكلاء الذكاء الاصطناعي، أنظمة الأتمتة، تطبيقات داخلية، بنية النمو الرقمي، استشارة استراتيجية
-- نخدم: لوجستيات، عقارات، توزيع، خدمات مهنية — أي شركة B2B بعمليات معقدة
-- الباقات: الأساس (٨,٠٠٠ ريال/شهر)، التوسع (١٨,٠٠٠)، الهيمنة (٣٨,٠٠٠) — جميعها عقود سنوية
-- العقود الشهرية متاحة بزيادة ٣٠٪
-- أول نظام جاهز خلال ٢-٣ أسابيع من بدء العقد
-- نتميز بأننا لا نبيع مشاريع تنتهي — نبني أنظمة تنمو مع الشركة
-
-== طريقة المحادثة ==
-1. ابدأ بترحيب دافئ واسأل عن اسمه
-2. اسأل عن اسم شركته وقطاعها ورابط الموقع إن وجد
-3. اسأل لماذا تواصل معنا — ما المشكلة أو الهدف؟
-4. اسأل عن عدد الموظفين تقريباً (١٠-٥٠، ٥٠-٢٠٠، +٢٠٠)
-5. اسأل: هل لديهم عمليات يدوية متكررة تستنزف الفريق؟
-6. اسأل: ما هو أكبر تحدٍّ تشغيلي يواجهونه الآن؟
-7. اسأل: هل قرار الاستثمار في الأتمتة جاهز أم لا يزالون يستكشفون؟
-8. في النهاية اطلب رقم الجوال/واتساب للتواصل المباشر
-
-== معايير التأهيل ==
-العميل مؤهل إذا:
-- شركة B2B حقيقية (لا أفراد أو startups في مرحلة الفكرة)
-- لديه عمليات يدوية واضحة يريد أتمتتها
-- حجم الشركة +١٠ موظفين
-- القرار قريب أو جاهز للاستثمار
-
-== أسلوب الردود ==
-- اللغة: عربية فصحى بسيطة وودية، مع مصطلحات تقنية إنجليزية عند الحاجة
-- لا تسأل أكثر من سؤالين في رسالة واحدة
-- ردودك قصيرة وواضحة — لا تطول
-- كن مهنياً لكن غير رسمي — مثل محادثة واتساب
-- إذا سألك العميل عن الأسعار أو التفاصيل التقنية، أجب بإيجاز وأكمل جمع المعلومات
-- لا تعطِ وعوداً محددة بنتائج أو أرقام ROI
-
-== متى تُنهي المحادثة ==
-بعد جمع: الاسم، اسم الشركة، القطاع، التحدي الرئيسي، حجم الشركة، ورقم الجوال —
-اختم بجملة تبدأ بـ: "QUALIFIED:" إذا كان العميل مؤهلاً
-أو "NOT_QUALIFIED:" إذا لم يكن مؤهلاً
-ثم اكتب ملخصاً قصيراً بالعربية.
-
-مثال: "QUALIFIED: عميل مؤهل — شركة لوجستيات ٥٠+ موظف، يريد أتمتة عروض الأسعار والمتابعة، القرار جاهز."`;
-
 export async function POST(req: Request) {
   try {
-  const GEMINI_API_KEY = process.env.GEMINI_API_KEY || "AIzaSyCvakkZS6Zu_ttxKEv0W2Xd3XptANQqY3g";
-  const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`;
+    const { messages } = await req.json();
+    const GEMINI_API_KEY = process.env.GEMINI_API_KEY || "AIzaSyCvakkZS6Zu_ttxKEv0W2Xd3XptANQqY3g";
 
-  const { messages } = await req.json();
+    const systemPrompt = [
+      "You are a helpful assistant for Nahr AI, a B2B automation agency in Saudi Arabia.",
+      "Your job: have a friendly conversation to qualify the lead and collect: name, company name, company website, why they are here, number of employees, biggest operational challenge, readiness to invest, and phone/WhatsApp number.",
+      "Ask only 1-2 questions per message. Keep responses short.",
+      "Always respond in Arabic.",
+      "Qualification criteria: real B2B company, has repetitive manual processes, 10+ employees, decision is near.",
+      "After collecting all info, end with QUALIFIED: or NOT_QUALIFIED: followed by a brief Arabic summary.",
+    ].join(" ");
 
-  const contents = messages.map((m: { role: string; content: string }) => ({
-    role: m.role === "assistant" ? "model" : "user",
-    parts: [{ text: m.content }],
-  }));
+    const contents = messages.map((m: { role: string; content: string }) => ({
+      role: m.role === "assistant" ? "model" : "user",
+      parts: [{ text: m.content }],
+    }));
 
-  const body = {
-    system_instruction: { parts: [{ text: SYSTEM_PROMPT }] },
-    contents,
-    generationConfig: {
-      temperature: 0.7,
-      maxOutputTokens: 400,
-    },
-  };
+    const body = {
+      system_instruction: { parts: [{ text: systemPrompt }] },
+      contents,
+      generationConfig: { temperature: 0.7, maxOutputTokens: 350 },
+    };
 
-  const res = await fetch(GEMINI_URL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(body),
-  });
+    const res = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      }
+    );
 
-  if (!res.ok) {
-    return Response.json({ text: "عذراً، حدث خطأ مؤقت. حاول مرة أخرى." }, { status: 200 });
-  }
+    if (!res.ok) {
+      const errText = await res.text();
+      return Response.json({ text: "service_error: " + errText.slice(0, 200) }, { status: 200 });
+    }
 
-  const data = await res.json();
-  const text = data.candidates?.[0]?.content?.parts?.[0]?.text ?? "";
+    const data = await res.json();
+    const text = data.candidates?.[0]?.content?.parts?.[0]?.text ?? "...";
+    return Response.json({ text });
 
-  return Response.json({ text });
-  } catch (e) {
-    return Response.json({ text: "حدث خطأ: " + String(e) }, { status: 200 });
+  } catch (err) {
+    return Response.json({ text: "catch_error: " + String(err) }, { status: 200 });
   }
 }
