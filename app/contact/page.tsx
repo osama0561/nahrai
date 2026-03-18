@@ -45,17 +45,20 @@ export default function ContactPage() {
   const startChat = async () => {
     setStarted(true);
     setLoading(true);
-    const res = await fetch("/api/chat", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ messages: [{ role: "user", content: "مرحبا" }] }),
-    });
-    const data = await res.json();
-    const text = data.text ?? "مرحباً! كيف أستطيع مساعدتك؟";
-    setMessages([
-      { role: "user", content: "مرحبا" },
-      { role: "assistant", content: text },
-    ]);
+    try {
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ messages: [{ role: "user", content: "مرحبا، أريد معرفة المزيد عن خدمات نهر AI" }] }),
+      });
+      const data = await res.json();
+      const text = data.text ?? "مرحباً! أنا مساعد نهر AI. ما اسمك الكريم؟";
+      setMessages([
+        { role: "assistant", content: text },
+      ]);
+    } catch {
+      setMessages([{ role: "assistant", content: "مرحباً! أنا مساعد نهر AI. كيف يمكنني مساعدتك؟ ما اسمك الكريم؟" }]);
+    }
     setLoading(false);
     setTimeout(() => inputRef.current?.focus(), 100);
   };
@@ -70,19 +73,23 @@ export default function ContactPage() {
     setInput("");
     setLoading(true);
 
-    const res = await fetch("/api/chat", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ messages: newMessages }),
-    });
-    const data = await res.json();
-    const rawText = data.text ?? "عذراً، حدث خطأ. حاول مرة أخرى.";
+    try {
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ messages: newMessages }),
+      });
+      const data = await res.json();
+      const rawText = data.text ?? "عذراً، حدث خطأ. حاول مرة أخرى.";
 
-    const qual = parseQualification(rawText);
-    if (qual) setQualification(qual);
+      const qual = parseQualification(rawText);
+      if (qual) setQualification(qual);
 
-    const cleanedText = cleanText(rawText);
-    setMessages(prev => [...prev, { role: "assistant", content: cleanedText }]);
+      const cleanedText = cleanText(rawText);
+      setMessages(prev => [...prev, { role: "assistant", content: cleanedText }]);
+    } catch {
+      setMessages(prev => [...prev, { role: "assistant", content: "عذراً، حدث خطأ في الاتصال. حاول مرة أخرى." }]);
+    }
     setLoading(false);
     setTimeout(() => inputRef.current?.focus(), 100);
   };
@@ -135,7 +142,7 @@ export default function ContactPage() {
             )}
 
             {/* Messages */}
-            {messages.slice(1).map((m, i) => (
+            {messages.map((m, i) => (
               <div key={i} className={`flex gap-3 ${m.role === "user" ? "flex-row-reverse" : "flex-row"}`}>
                 {/* Avatar */}
                 <div
