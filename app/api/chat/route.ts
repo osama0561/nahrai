@@ -2,6 +2,7 @@ export const runtime = "edge";
 
 export async function POST(req: Request) {
   try {
+    const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
     const { messages } = await req.json();
     if (!GEMINI_API_KEY) {
       return Response.json({ text: "عذراً، الخدمة غير متاحة حالياً." }, { status: 200 });
