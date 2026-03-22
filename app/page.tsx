@@ -388,6 +388,124 @@ function WhoWeServeSection() {
   );
 }
 
+// ─── CASE STUDIES ─────────────────────────────────────────────────────────────
+function CaseStudiesSection() {
+  const ref = useRef<HTMLElement>(null);
+  useEffect(() => {
+    const load = async () => {
+      const { gsap } = await import("gsap");
+      const { ScrollTrigger } = await import("gsap/ScrollTrigger");
+      gsap.registerPlugin(ScrollTrigger);
+      gsap.fromTo(ref.current?.querySelectorAll(".case-card") || [], { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 0.9, stagger: 0.2, ease: "power3.out", scrollTrigger: { trigger: ref.current, start: "top 75%" } });
+    };
+    load();
+  }, []);
+
+  return (
+    <section ref={ref} className="py-24 px-6" style={{ background: "#0A1628" }}>
+      <div className="max-w-6xl mx-auto">
+        <div className="text-center mb-16">
+          <p className="text-sm mb-3" style={{ color: "#00A3FF", fontFamily: "IBM Plex Mono" }}>نتائج حقيقية</p>
+          <h2 className="text-3xl md:text-5xl font-bold mb-4">عملاء بنوا معنا</h2>
+          <p className="text-base max-w-xl mx-auto" style={{ color: "rgba(240,244,255,0.55)" }}>
+            لا وعود — نتائج موثقة من شركات عملت معنا فعلاً.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+          {/* Shortcut */}
+          <div className="case-card p-8 rounded-[2rem] flex flex-col gap-6" style={{ background: "#020B19", border: "1px solid rgba(0,163,255,0.2)", opacity: 0 }}>
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-xl font-bold">Shortcut</p>
+                <p className="text-sm" style={{ color: "#00A3FF" }}>وكالة تسويق بالمؤثرين</p>
+              </div>
+              <div className="px-3 py-1 rounded-full text-xs font-bold" style={{ background: "rgba(0,163,255,0.12)", color: "#00A3FF", border: "1px solid rgba(0,163,255,0.3)" }}>
+                مكتمل ✓
+              </div>
+            </div>
+
+            <p className="text-sm leading-relaxed" style={{ color: "rgba(240,244,255,0.65)" }}>
+              كانوا يديرون حملات المؤثرين يدوياً — فتح الحملة، تتبع كل مؤثر، قياس النتائج — كل شيء في ملفات متفرقة. بنينا لهم نظاماً داخلياً يدير دورة الحملة كاملة من البداية للنهاية.
+            </p>
+
+            <div className="grid grid-cols-3 gap-3">
+              {[
+                { num: "٤x", label: "زيادة في استيعاب العملاء" },
+                { num: "٢٠٠", label: "مؤثر تتبعهم الشركة" },
+                { num: "١ ساعة", label: "بدل شهر لإدارة حملة" },
+              ].map((s, i) => (
+                <div key={i} className="text-center p-3 rounded-xl" style={{ background: "rgba(0,163,255,0.06)", border: "1px solid rgba(0,163,255,0.12)" }}>
+                  <p className="text-xl font-bold mb-1" style={{ color: "#00A3FF", fontFamily: "IBM Plex Mono" }}>{s.num}</p>
+                  <p className="text-xs leading-tight" style={{ color: "rgba(240,244,255,0.5)" }}>{s.label}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="p-4 rounded-xl" style={{ background: "rgba(0,163,255,0.05)", border: "1px solid rgba(0,163,255,0.1)" }}>
+              <p className="text-sm italic leading-relaxed" style={{ color: "rgba(240,244,255,0.7)" }}>
+                "أصبحنا قادرين على استقبال ٤ أضعاف العملاء — كنا نرفض عملاء لأننا لا نستطيع التشغيل بعدد موظفينا."
+              </p>
+              <p className="text-xs mt-2" style={{ color: "#00A3FF" }}>— فريق Shortcut</p>
+            </div>
+
+            <div className="flex flex-wrap gap-2">
+              {["تطبيق داخلي مخصص", "تتبع المؤثرين", "إدارة الحملات", "تقارير تلقائية"].map((t, i) => (
+                <span key={i} className="px-3 py-1 rounded-full text-xs" style={{ background: "rgba(240,244,255,0.06)", color: "rgba(240,244,255,0.5)", border: "1px solid rgba(240,244,255,0.1)" }}>{t}</span>
+              ))}
+            </div>
+          </div>
+
+          {/* Nawat */}
+          <div className="case-card p-8 rounded-[2rem] flex flex-col gap-6" style={{ background: "#020B19", border: "1px solid rgba(0,163,255,0.2)", opacity: 0 }}>
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-xl font-bold">Nawat</p>
+                <p className="text-sm" style={{ color: "#00A3FF" }}>خدمات قانونية — قطاع الرياضات الإلكترونية</p>
+              </div>
+              <div className="px-3 py-1 rounded-full text-xs font-bold" style={{ background: "rgba(255,163,0,0.1)", color: "#FFA300", border: "1px solid rgba(255,163,0,0.3)" }}>
+                جارٍ البناء
+              </div>
+            </div>
+
+            <p className="text-sm leading-relaxed" style={{ color: "rgba(240,244,255,0.65)" }}>
+              شركة قانونية متخصصة في شركات الرياضات الإلكترونية — نبني لهم منظومة كاملة: وكيل واتساب يستقبل ويؤهل العملاء، تطبيقات داخلية لإدارة القضايا، وصفحات هبوط مخصصة لكل خدمة.
+            </p>
+
+            <div className="grid grid-cols-3 gap-3">
+              {[
+                { num: "٢٤/٧", label: "استقبال العملاء تلقائياً" },
+                { num: "٤", label: "أنظمة تُبنى بالتوازي" },
+                { num: "E-Sports", label: "أول خدمة قانونية متخصصة" },
+              ].map((s, i) => (
+                <div key={i} className="text-center p-3 rounded-xl" style={{ background: "rgba(0,163,255,0.06)", border: "1px solid rgba(0,163,255,0.12)" }}>
+                  <p className="text-xl font-bold mb-1" style={{ color: "#00A3FF", fontFamily: "IBM Plex Mono" }}>{s.num}</p>
+                  <p className="text-xs leading-tight" style={{ color: "rgba(240,244,255,0.5)" }}>{s.label}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="p-4 rounded-xl" style={{ background: "rgba(0,163,255,0.05)", border: "1px solid rgba(0,163,255,0.1)" }}>
+              <p className="text-sm italic leading-relaxed" style={{ color: "rgba(240,244,255,0.7)" }}>
+                "نهر تحول ضجيج الذكاء الاصطناعي إلى أدوات حقيقية قابلة للتطبيق — هذا بالضبط ما يحتاجه المستقبل."
+              </p>
+              <p className="text-xs mt-2" style={{ color: "#00A3FF" }}>— فريق Nawat</p>
+            </div>
+
+            <div className="flex flex-wrap gap-2">
+              {["وكيل واتساب", "تطبيقات داخلية", "صفحات هبوط", "أتمتة كاملة"].map((t, i) => (
+                <span key={i} className="px-3 py-1 rounded-full text-xs" style={{ background: "rgba(240,244,255,0.06)", color: "rgba(240,244,255,0.5)", border: "1px solid rgba(240,244,255,0.1)" }}>{t}</span>
+              ))}
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  );
+}
+
 // ─── CTA STRIP ────────────────────────────────────────────────────────────────
 function CTAStrip() {
   return (
@@ -418,6 +536,7 @@ export default function HomePage() {
       <PhilosophySection />
       <PackagesSection />
       <WhyStaySection />
+      <CaseStudiesSection />
       <WhoWeServeSection />
       <CTAStrip />
     </>
