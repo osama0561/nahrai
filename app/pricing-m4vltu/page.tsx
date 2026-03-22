@@ -1,7 +1,7 @@
 "use client";
 import { useEffect } from "react";
 import Link from "next/link";
-import { CheckCircle, Star, Zap, Crown } from "lucide-react";
+import { CheckCircle, Star, Zap, Crown, TrendingUp, Clock, Users } from "lucide-react";
 
 const tiers = [
   {
@@ -81,22 +81,98 @@ export default function PricingPage() {
 
   return (
     <>
-      {/* Hero */}
-      <section className="pt-40 pb-16 px-6 text-center relative overflow-hidden" style={{ background: "linear-gradient(180deg, #020B19 0%, #001830 100%)" }}>
+      {/* Hero — Sales Page */}
+      <section className="pt-40 pb-20 px-6 text-center relative overflow-hidden" style={{ background: "linear-gradient(180deg, #020B19 0%, #001830 100%)" }}>
         <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: "radial-gradient(ellipse at center, rgba(0,163,255,0.08) 0%, transparent 60%)" }} />
-        <p className="pricing-hero text-sm mb-4 relative z-10" style={{ color: "#00A3FF", fontFamily: "IBM Plex Mono", opacity: 0 }}>الباقات</p>
-        <h1 className="pricing-hero text-4xl md:text-5xl font-bold mb-4 relative z-10 leading-tight" style={{ opacity: 0 }}>
-          اختر{" "}
-          <span style={{ color: "#00A3FF" }} className="text-glow">باقتك</span>
+        <p className="pricing-hero text-sm mb-4 relative z-10" style={{ color: "#00A3FF", fontFamily: "IBM Plex Mono", opacity: 0 }}>٤٥ يوم لشركة تعمل بالذكاء الاصطناعي</p>
+        <h1 className="pricing-hero text-4xl md:text-6xl font-bold mb-6 relative z-10 leading-tight" style={{ opacity: 0 }}>
+          pipeline يملأ نفسه{" "}
+          <br className="hidden md:block" />
+          <span style={{ color: "#00A3FF" }} className="text-glow">وفريق يوقف هدر الوقت</span>
         </h1>
-        <p className="pricing-hero text-base max-w-xl mx-auto relative z-10" style={{ color: "rgba(240,244,255,0.55)", opacity: 0 }}>
-          كل شيء مبني خصيصاً لشركتك — لا قوالب جاهزة، لا حلول مشتركة.
+        <p className="pricing-hero text-base md:text-lg max-w-2xl mx-auto relative z-10 leading-relaxed" style={{ color: "rgba(240,244,255,0.6)", opacity: 0 }}>
+          نبني لك نظام ذكاء اصطناعي كامل — وكلاء AI وأتمتات مخصصة لعمليات شركتك الفعلية. أول نتيجة في ٣ أسابيع. النظام كامل في ٤٥ يوماً.
         </p>
+
+        {/* Stats */}
+        <div className="pricing-hero mt-12 flex flex-col md:flex-row items-center justify-center gap-6 relative z-10" style={{ opacity: 0 }}>
+          {[
+            { icon: Clock, stat: "٣ أسابيع", label: "لأول نتيجة حقيقية" },
+            { icon: TrendingUp, stat: "٤×", label: "عملاء Nawat بعد الأتمتة" },
+            { icon: Users, stat: "شهر → ساعة", label: "وقت عمل Shortcut" },
+          ].map((item, i) => {
+            const Icon = item.icon;
+            return (
+              <div key={i} className="flex items-center gap-3 px-6 py-4 rounded-2xl" style={{ background: "rgba(0,163,255,0.07)", border: "1px solid rgba(0,163,255,0.15)" }}>
+                <Icon size={18} color="#00A3FF" />
+                <div className="text-right">
+                  <p className="font-bold text-lg leading-none">{item.stat}</p>
+                  <p className="text-xs mt-1" style={{ color: "rgba(240,244,255,0.5)" }}>{item.label}</p>
+                </div>
+              </div>
+            );
+          })}
+        </div>
       </section>
+
+      {/* What you get */}
+      <section className="py-16 px-6" style={{ background: "#0A1628" }}>
+        <div className="max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            <div>
+              <p className="text-sm mb-3" style={{ color: "#00A3FF", fontFamily: "IBM Plex Mono" }}>ماذا تحصل</p>
+              <h2 className="text-3xl font-bold mb-6 leading-snug">كل شيء مبني<br />خصيصاً لشركتك</h2>
+              <ul className="flex flex-col gap-4">
+                {[
+                  { t: "وكلاء AI مخصصين", s: "تسويق، مبيعات، وعمليات — يعملون ٢٤/٧ بدلاً عنك" },
+                  { t: "أتمتات حسب workflow شركتك", s: "لا قوالب جاهزة — نبني حول طريقة عملك الفعلية" },
+                  { t: "تقرير أداء شهري", s: "ترى بالأرقام كم وقت توفر وكم lead جاء" },
+                  { t: "٣ جلسات فقط منك", s: "متطلبات، مراجعة، وإطلاق — بدون إرهاق" },
+                ].map((item, i) => (
+                  <li key={i} className="flex gap-3">
+                    <CheckCircle size={18} color="#00A3FF" className="flex-shrink-0 mt-0.5" />
+                    <div>
+                      <p className="text-sm font-semibold">{item.t}</p>
+                      <p className="text-xs mt-0.5" style={{ color: "rgba(240,244,255,0.45)" }}>{item.s}</p>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="p-8 rounded-[2rem]" style={{ background: "#020B19", border: "1px solid rgba(0,163,255,0.15)" }}>
+              <p className="text-xs mb-4" style={{ color: "#00A3FF", fontFamily: "IBM Plex Mono" }}>نقبل فقط الشركات اللي نقتنع إننا نقدر نحدث لها أثر حقيقي</p>
+              <h3 className="text-xl font-bold mb-4">مناسب لك إذا:</h3>
+              <ul className="flex flex-col gap-3">
+                {[
+                  "شركة B2B في MENA بـ ١٥+ موظف",
+                  "ما عندك نظام lead generation ثابت",
+                  "فريقك يضيع وقته في مهام يدوية متكررة",
+                  "تبي تنمو بدون ما تضاعف التوظيف",
+                ].map((item, i) => (
+                  <li key={i} className="flex gap-2 text-sm" style={{ color: "rgba(240,244,255,0.7)" }}>
+                    <span style={{ color: "#00A3FF" }}>←</span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Divider */}
+      <div style={{ height: "1px", background: "linear-gradient(to right, transparent, rgba(0,163,255,0.2), transparent)" }} />
 
       {/* Tiers */}
       <section className="py-20 px-6" style={{ background: "#020B19" }}>
         <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-14">
+            <p className="text-sm mb-3" style={{ color: "#00A3FF", fontFamily: "IBM Plex Mono" }}>الباقات</p>
+            <h2 className="text-3xl md:text-4xl font-bold mb-3">اختر باقتك</h2>
+            <p className="text-base max-w-lg mx-auto" style={{ color: "rgba(240,244,255,0.5)" }}>
+              كل باقة تُبنى من الصفر لشركتك — لا شيء جاهز، لا حلول مشتركة.
+            </p>
+          </div>
           <div className="tiers-grid grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
             {tiers.map((tier, i) => {
               const Icon = tier.icon;
