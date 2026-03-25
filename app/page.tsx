@@ -241,61 +241,6 @@ function PhilosophySection() {
 
 
 // ─── PACKAGES ─────────────────────────────────────────────────────────────────
-const packages = [
-  { name: "باقة الأساس", price: "٨,٠٠٠", period: "ريال/شهر | عقد سنوي", featured: false, features: ["وكيلان بالذكاء الاصطناعي", "٣ سير عمل أتمتة", "تطبيق داخلي واحد", "صفحة هبوط واحدة", "جلسة استشارة شهرية (ساعة)"] },
-  { name: "باقة التوسع", price: "١٨,٠٠٠", period: "ريال/شهر | عقد سنوي", featured: true, features: ["٤ وكلاء بالذكاء الاصطناعي", "٦ سير عمل أتمتة", "تطبيقان داخليان", "صفحة هبوط + بريد بارد آلي", "٨ منشورات LinkedIn شهرياً", "جلستا استشارة شهرياً"] },
-  { name: "باقة الهيمنة", price: "٣٨,٠٠٠", period: "ريال/شهر | عقد سنوي", featured: false, features: ["٦ وكلاء بالذكاء الاصطناعي", "١٠ سير عمل أتمتة", "٣ تطبيقات داخلية", "موقع كامل + صفحات هبوط متعددة", "بريد بارد آلي + ١٦ منشور LinkedIn", "مدير حساب مخصص", "٤ جلسات استشارة + واتساب مباشر"] },
-];
-
-function PackagesSection() {
-  const ref = useRef<HTMLElement>(null);
-  useEffect(() => {
-    const load = async () => {
-      const { gsap } = await import("gsap");
-      const { ScrollTrigger } = await import("gsap/ScrollTrigger");
-      gsap.registerPlugin(ScrollTrigger);
-      gsap.fromTo(ref.current?.querySelectorAll(".pkg-card") || [], { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: 0.8, stagger: 0.2, ease: "power3.out", scrollTrigger: { trigger: ref.current, start: "top 75%" } });
-    };
-    load();
-  }, []);
-
-  return (
-    <section ref={ref} className="py-24 px-6" style={{ background: "#020B19" }}>
-      <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-16">
-          <p className="text-sm mb-3" style={{ color: "#00A3FF", fontFamily: "IBM Plex Mono" }}>الباقات</p>
-          <h2 className="text-3xl md:text-5xl font-bold">اختر باقتك</h2>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
-          {packages.map((pkg, i) => (
-            <div key={i} className="pkg-card card-hover p-8 rounded-[2rem] flex flex-col relative" style={{ background: pkg.featured ? "linear-gradient(135deg, #0A1628, #001840)" : "#0A1628", border: pkg.featured ? "2px solid #00A3FF" : "1px solid rgba(0,163,255,0.15)", boxShadow: pkg.featured ? "0 0 40px rgba(0,163,255,0.2)" : "none", opacity: 0 }}>
-              {pkg.featured && <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1.5 rounded-full text-xs font-bold" style={{ background: "#00A3FF", color: "#020B19" }}>الأكثر شيوعاً</div>}
-              <div className="mb-6">
-                <h3 className="text-xl font-bold mb-2" style={{ color: pkg.featured ? "#00A3FF" : "#F0F4FF" }}>{pkg.name}</h3>
-                <div className="text-4xl font-bold mb-1" style={{ color: "#F0F4FF", fontFamily: "IBM Plex Mono" }}>{pkg.price}</div>
-                <p className="text-sm" style={{ color: "rgba(240,244,255,0.45)" }}>{pkg.period}</p>
-              </div>
-              <ul className="flex-1 space-y-3 mb-8">
-                {pkg.features.map((f, j) => (
-                  <li key={j} className="flex items-start gap-3">
-                    <CheckCircle size={16} color="#00A3FF" className="flex-shrink-0 mt-0.5" />
-                    <span className="text-sm" style={{ color: "rgba(240,244,255,0.75)" }}>{f}</span>
-                  </li>
-                ))}
-              </ul>
-              <Link href="/contact" className={`${pkg.featured ? "btn-primary" : "btn-outline"} justify-center`}>
-                <span>ابدأ الآن</span>
-              </Link>
-            </div>
-          ))}
-        </div>
-        <p className="text-center mt-8 text-sm" style={{ color: "rgba(240,244,255,0.35)", fontFamily: "IBM Plex Mono" }}>
-          * العقود الشهرية متاحة بزيادة ٣٠٪ على السعر الشهري
-        </p>
-      </div>
-    </section>
-  );
-}
 
 // ─── WHY STAY ─────────────────────────────────────────────────────────────────
 function WhyStaySection() {
@@ -534,7 +479,6 @@ export default function HomePage() {
       <ProblemSection />
       <WhatWeBuildSection />
       <PhilosophySection />
-      <PackagesSection />
       <WhyStaySection />
       <CaseStudiesSection />
       <WhoWeServeSection />
