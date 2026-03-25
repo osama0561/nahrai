@@ -7,7 +7,6 @@ const links = [
   { href: "/", label: "الرئيسية" },
   { href: "/services", label: "خدماتنا" },
   { href: "/about", label: "من نحن" },
-  { href: "/contact", label: "تواصل معنا" },
 ];
 
 export default function Navbar() {
@@ -65,9 +64,9 @@ export default function Navbar() {
 
       {/* CTA */}
       <div className="hidden md:flex">
-        <Link href="/contact" className="btn-primary text-sm py-2.5 px-5">
+        <button onClick={() => window.dispatchEvent(new CustomEvent("open-chat"))} className="btn-primary text-sm py-2.5 px-5">
           <span>احجز استشارة</span>
-        </Link>
+        </button>
       </div>
 
       {/* Mobile menu toggle */}
@@ -95,9 +94,12 @@ export default function Navbar() {
               {l.label}
             </Link>
           ))}
-          <Link href="/contact" className="btn-primary text-sm justify-center mt-2" onClick={() => setOpen(false)}>
+          <button
+            className="btn-primary text-sm justify-center mt-2"
+            onClick={() => { setOpen(false); window.dispatchEvent(new CustomEvent("open-chat")); }}
+          >
             <span>احجز استشارة</span>
-          </Link>
+          </button>
         </div>
       )}
     </nav>
