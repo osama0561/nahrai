@@ -63,11 +63,11 @@ function HeroSection() {
           className="hero-line2 leading-none mb-6 font-serif"
           style={{ fontSize: "clamp(3.5rem, 8vw, 7rem)", fontFamily: "'Noto Naskh Arabic', serif", color: "#F0F4FF", fontStyle: "italic", opacity: 0, lineHeight: 1.1 }}
         >
-          نهر يبني{" "}
+          نهر تبني{" "}
           <span style={{ color: "#00A3FF" }} className="text-glow">الأنظمة.</span>
         </h1>
         <p className="hero-sub text-base md:text-lg mb-8 leading-relaxed" style={{ color: "rgba(240,244,255,0.6)", opacity: 0, maxWidth: "540px" }}>
-          وكالة أتمتة بعقود سنوية | نبني البنية التشغيلية الرقمية لشركات B2B في المملكة العربية السعودية
+          وكالة أتمتة تبني البنية التشغيلية الرقمية لشركات B2B في المملكة العربية السعودية — نولّد العملاء ونؤتمت العمليات بالذكاء الاصطناعي.
         </p>
         <div className="flex flex-wrap gap-4 justify-end">
           <Link href="/services" className="hero-cta btn-outline" style={{ opacity: 0 }}>
