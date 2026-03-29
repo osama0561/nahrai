@@ -1,4 +1,4 @@
-const N8N_WEBHOOK = "https://n8n.srv1200431.hstgr.cloud/webhook/pricing-signup";
+const N8N_WEBHOOK = "https://n8n.srv1200431.hstgr.cloud/webhook/9f7a00c2-b254-4de4-98a2-fa9fc5642648";
 
 const tierLabels: Record<string, string> = {
   bronze: "برونز — ٢,٣٠٠ ريال/شهر",
