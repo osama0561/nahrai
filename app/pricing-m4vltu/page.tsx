@@ -4,50 +4,50 @@ import { CheckCircle, Star, Zap, Crown, TrendingUp, Clock, Users, X, Send, Wrenc
 
 /* ─── Country Codes ─── */
 const countryCodes = [
-  { code: "+966", flag: "🇸🇦", name: "السعودية", nameEn: "Saudi Arabia" },
-  { code: "+971", flag: "🇦🇪", name: "الإمارات", nameEn: "UAE" },
-  { code: "+973", flag: "🇧🇭", name: "البحرين", nameEn: "Bahrain" },
-  { code: "+968", flag: "🇴🇲", name: "عُمان", nameEn: "Oman" },
-  { code: "+965", flag: "🇰🇼", name: "الكويت", nameEn: "Kuwait" },
-  { code: "+974", flag: "🇶🇦", name: "قطر", nameEn: "Qatar" },
-  { code: "+20", flag: "🇪🇬", name: "مصر", nameEn: "Egypt" },
-  { code: "+962", flag: "🇯🇴", name: "الأردن", nameEn: "Jordan" },
-  { code: "+961", flag: "🇱🇧", name: "لبنان", nameEn: "Lebanon" },
-  { code: "+964", flag: "🇮🇶", name: "العراق", nameEn: "Iraq" },
-  { code: "+212", flag: "🇲🇦", name: "المغرب", nameEn: "Morocco" },
-  { code: "+216", flag: "🇹🇳", name: "تونس", nameEn: "Tunisia" },
-  { code: "+213", flag: "🇩🇿", name: "الجزائر", nameEn: "Algeria" },
-  { code: "+249", flag: "🇸🇩", name: "السودان", nameEn: "Sudan" },
-  { code: "+218", flag: "🇱🇾", name: "ليبيا", nameEn: "Libya" },
-  { code: "+967", flag: "🇾🇪", name: "اليمن", nameEn: "Yemen" },
-  { code: "+963", flag: "🇸🇾", name: "سوريا", nameEn: "Syria" },
-  { code: "+970", flag: "🇵🇸", name: "فلسطين", nameEn: "Palestine" },
-  { code: "+90", flag: "🇹🇷", name: "تركيا", nameEn: "Turkey" },
-  { code: "+44", flag: "🇬🇧", name: "بريطانيا", nameEn: "United Kingdom" },
-  { code: "+1", flag: "🇺🇸", name: "أمريكا", nameEn: "United States" },
-  { code: "+49", flag: "🇩🇪", name: "ألمانيا", nameEn: "Germany" },
-  { code: "+33", flag: "🇫🇷", name: "فرنسا", nameEn: "France" },
-  { code: "+91", flag: "🇮🇳", name: "الهند", nameEn: "India" },
-  { code: "+92", flag: "🇵🇰", name: "باكستان", nameEn: "Pakistan" },
-  { code: "+60", flag: "🇲🇾", name: "ماليزيا", nameEn: "Malaysia" },
-  { code: "+62", flag: "🇮🇩", name: "إندونيسيا", nameEn: "Indonesia" },
-  { code: "+234", flag: "🇳🇬", name: "نيجيريا", nameEn: "Nigeria" },
-  { code: "+27", flag: "🇿🇦", name: "جنوب أفريقيا", nameEn: "South Africa" },
-  { code: "+55", flag: "🇧🇷", name: "البرازيل", nameEn: "Brazil" },
-  { code: "+86", flag: "🇨🇳", name: "الصين", nameEn: "China" },
-  { code: "+81", flag: "🇯🇵", name: "اليابان", nameEn: "Japan" },
-  { code: "+82", flag: "🇰🇷", name: "كوريا الجنوبية", nameEn: "South Korea" },
-  { code: "+61", flag: "🇦🇺", name: "أستراليا", nameEn: "Australia" },
-  { code: "+31", flag: "🇳🇱", name: "هولندا", nameEn: "Netherlands" },
-  { code: "+34", flag: "🇪🇸", name: "إسبانيا", nameEn: "Spain" },
-  { code: "+39", flag: "🇮🇹", name: "إيطاليا", nameEn: "Italy" },
-  { code: "+46", flag: "🇸🇪", name: "السويد", nameEn: "Sweden" },
-  { code: "+41", flag: "🇨🇭", name: "سويسرا", nameEn: "Switzerland" },
-  { code: "+7", flag: "🇷🇺", name: "روسيا", nameEn: "Russia" },
-  { code: "+52", flag: "🇲🇽", name: "المكسيك", nameEn: "Mexico" },
-  { code: "+63", flag: "🇵🇭", name: "الفلبين", nameEn: "Philippines" },
-  { code: "+66", flag: "🇹🇭", name: "تايلاند", nameEn: "Thailand" },
-  { code: "+65", flag: "🇸🇬", name: "سنغافورة", nameEn: "Singapore" },
+  { code: "+966", flag: "🇸🇦", name: "السعودية", nameEn: "Saudi Arabia", digits: 9 },
+  { code: "+971", flag: "🇦🇪", name: "الإمارات", nameEn: "UAE", digits: 9 },
+  { code: "+973", flag: "🇧🇭", name: "البحرين", nameEn: "Bahrain", digits: 8 },
+  { code: "+968", flag: "🇴🇲", name: "عُمان", nameEn: "Oman", digits: 8 },
+  { code: "+965", flag: "🇰🇼", name: "الكويت", nameEn: "Kuwait", digits: 8 },
+  { code: "+974", flag: "🇶🇦", name: "قطر", nameEn: "Qatar", digits: 8 },
+  { code: "+20", flag: "🇪🇬", name: "مصر", nameEn: "Egypt", digits: 10 },
+  { code: "+962", flag: "🇯🇴", name: "الأردن", nameEn: "Jordan", digits: 9 },
+  { code: "+961", flag: "🇱🇧", name: "لبنان", nameEn: "Lebanon", digits: 8 },
+  { code: "+964", flag: "🇮🇶", name: "العراق", nameEn: "Iraq", digits: 10 },
+  { code: "+212", flag: "🇲🇦", name: "المغرب", nameEn: "Morocco", digits: 9 },
+  { code: "+216", flag: "🇹🇳", name: "تونس", nameEn: "Tunisia", digits: 8 },
+  { code: "+213", flag: "🇩🇿", name: "الجزائر", nameEn: "Algeria", digits: 9 },
+  { code: "+249", flag: "🇸🇩", name: "السودان", nameEn: "Sudan", digits: 9 },
+  { code: "+218", flag: "🇱🇾", name: "ليبيا", nameEn: "Libya", digits: 9 },
+  { code: "+967", flag: "🇾🇪", name: "اليمن", nameEn: "Yemen", digits: 9 },
+  { code: "+963", flag: "🇸🇾", name: "سوريا", nameEn: "Syria", digits: 9 },
+  { code: "+970", flag: "🇵🇸", name: "فلسطين", nameEn: "Palestine", digits: 9 },
+  { code: "+90", flag: "🇹🇷", name: "تركيا", nameEn: "Turkey", digits: 10 },
+  { code: "+44", flag: "🇬🇧", name: "بريطانيا", nameEn: "United Kingdom", digits: 10 },
+  { code: "+1", flag: "🇺🇸", name: "أمريكا", nameEn: "United States", digits: 10 },
+  { code: "+49", flag: "🇩🇪", name: "ألمانيا", nameEn: "Germany", digits: 11 },
+  { code: "+33", flag: "🇫🇷", name: "فرنسا", nameEn: "France", digits: 9 },
+  { code: "+91", flag: "🇮🇳", name: "الهند", nameEn: "India", digits: 10 },
+  { code: "+92", flag: "🇵🇰", name: "باكستان", nameEn: "Pakistan", digits: 10 },
+  { code: "+60", flag: "🇲🇾", name: "ماليزيا", nameEn: "Malaysia", digits: 10 },
+  { code: "+62", flag: "🇮🇩", name: "إندونيسيا", nameEn: "Indonesia", digits: 11 },
+  { code: "+234", flag: "🇳🇬", name: "نيجيريا", nameEn: "Nigeria", digits: 10 },
+  { code: "+27", flag: "🇿🇦", name: "جنوب أفريقيا", nameEn: "South Africa", digits: 9 },
+  { code: "+55", flag: "🇧🇷", name: "البرازيل", nameEn: "Brazil", digits: 11 },
+  { code: "+86", flag: "🇨🇳", name: "الصين", nameEn: "China", digits: 11 },
+  { code: "+81", flag: "🇯🇵", name: "اليابان", nameEn: "Japan", digits: 10 },
+  { code: "+82", flag: "🇰🇷", name: "كوريا الجنوبية", nameEn: "South Korea", digits: 10 },
+  { code: "+61", flag: "🇦🇺", name: "أستراليا", nameEn: "Australia", digits: 9 },
+  { code: "+31", flag: "🇳🇱", name: "هولندا", nameEn: "Netherlands", digits: 9 },
+  { code: "+34", flag: "🇪🇸", name: "إسبانيا", nameEn: "Spain", digits: 9 },
+  { code: "+39", flag: "🇮🇹", name: "إيطاليا", nameEn: "Italy", digits: 10 },
+  { code: "+46", flag: "🇸🇪", name: "السويد", nameEn: "Sweden", digits: 9 },
+  { code: "+41", flag: "🇨🇭", name: "سويسرا", nameEn: "Switzerland", digits: 9 },
+  { code: "+7", flag: "🇷🇺", name: "روسيا", nameEn: "Russia", digits: 10 },
+  { code: "+52", flag: "🇲🇽", name: "المكسيك", nameEn: "Mexico", digits: 10 },
+  { code: "+63", flag: "🇵🇭", name: "الفلبين", nameEn: "Philippines", digits: 10 },
+  { code: "+66", flag: "🇹🇭", name: "تايلاند", nameEn: "Thailand", digits: 9 },
+  { code: "+65", flag: "🇸🇬", name: "سنغافورة", nameEn: "Singapore", digits: 8 },
 ];
 
 /* ─── Monthly Retainer Tiers ─── */
@@ -587,7 +587,7 @@ export default function PricingPage() {
                                   <button
                                     key={c.code}
                                     type="button"
-                                    onClick={() => { setCountryCode(c.code); setCountryDropdownOpen(false); }}
+                                    onClick={() => { setCountryCode(c.code); setCountryDropdownOpen(false); setFormData(prev => ({ ...prev, whatsapp: "" })); }}
                                     className="w-full flex items-center gap-3 px-3 py-2.5 text-sm cursor-pointer transition-colors hover:bg-[rgba(0,163,255,0.08)]"
                                     style={{ color: "#F0F4FF" }}
                                   >
@@ -602,15 +602,28 @@ export default function PricingPage() {
                       </div>
 
                       {/* Phone number */}
-                      <input
-                        required
-                        type="tel"
-                        value={formData.whatsapp}
-                        onChange={(e) => setFormData(prev => ({ ...prev, whatsapp: e.target.value }))}
-                        className="flex-1 px-4 py-3 rounded-xl text-sm outline-none transition-colors"
-                        style={{ background: "#020B19", border: "1px solid rgba(0,163,255,0.15)", color: "#F0F4FF" }}
-                        placeholder="5XX XXX XXXX"
-                      />
+                      {(() => {
+                        const selectedCountry = countryCodes.find(c => c.code === countryCode);
+                        const maxDigits = selectedCountry?.digits || 10;
+                        return (
+                          <input
+                            required
+                            type="tel"
+                            inputMode="numeric"
+                            pattern="[0-9]*"
+                            minLength={maxDigits}
+                            maxLength={maxDigits}
+                            value={formData.whatsapp}
+                            onChange={(e) => {
+                              const val = e.target.value.replace(/\D/g, "").slice(0, maxDigits);
+                              setFormData(prev => ({ ...prev, whatsapp: val }));
+                            }}
+                            className="flex-1 px-4 py-3 rounded-xl text-sm outline-none transition-colors"
+                            style={{ background: "#020B19", border: "1px solid rgba(0,163,255,0.15)", color: "#F0F4FF" }}
+                            placeholder={`${"X".repeat(maxDigits)} (${maxDigits} أرقام)`}
+                          />
+                        );
+                      })()}
                     </div>
                   </div>
                   <div>
