@@ -1,4 +1,3 @@
-// TODO: Replace this URL with your Google Apps Script deployment URL
 const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwK5lzqYUNFbk4w0IiE04qTIo1PaeuOgkOmfQGK_PSu_6FH4YeI3OjBWCHqhAaPUtZW/exec";
 
 const tierLabels: Record<string, string> = {
@@ -23,27 +22,36 @@ export async function POST(req: Request) {
 
     const tierLabel = tierLabels[tier] || tier;
 
+    const payload = JSON.stringify({
+      name,
+      company,
+      email,
+      whatsapp,
+      tier: tierLabel,
+      description: description || "",
+    });
+
+    // Google Apps Script redirects on POST — follow manually
     const res = await fetch(GOOGLE_SCRIPT_URL, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        name,
-        company,
-        email,
-        whatsapp,
-        tier: tierLabel,
-        description: description || "",
-      }),
+      headers: { "Content-Type": "text/plain" },
+      body: payload,
+      redirect: "follow",
     });
 
-    if (!res.ok) {
-      const text = await res.text();
-      throw new Error(`Google Script error (${res.status}): ${text}`);
+    // Even if redirected, if we got here it worked
+    // Google Apps Script returns 200 on success after redirect
+    // Or 302 which fetch auto-follows
+    const text = await res.text();
+
+    // Check if the response contains our success JSON or is an error page
+    if (text.includes('"success"') || res.ok) {
+      return new Response(JSON.stringify({ success: true }), {
+        headers: { "Content-Type": "application/json" },
+      });
     }
 
-    return new Response(JSON.stringify({ success: true }), {
-      headers: { "Content-Type": "application/json" },
-    });
+    throw new Error(`Google Script returned: ${res.status}`);
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
     console.error("Pricing signup error:", message);
