@@ -109,6 +109,7 @@ export default function PricingPage() {
   const [formData, setFormData] = useState({ name: "", company: "", email: "", whatsapp: "", description: "" });
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [formError, setFormError] = useState("");
   const formRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -134,6 +135,7 @@ export default function PricingPage() {
     setSelectedTier(tierKey);
     setFormData({ name: "", company: "", email: "", whatsapp: "", description: "" });
     setSubmitted(false);
+    setFormError("");
     setFormOpen(true);
   };
 
@@ -142,14 +144,19 @@ export default function PricingPage() {
     if (submitting) return;
     setSubmitting(true);
     try {
-      await fetch("/api/pricing-signup", {
+      const res = await fetch("/api/pricing-signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...formData, tier: selectedTier }),
       });
-      setSubmitted(true);
+      const data = await res.json();
+      if (!res.ok) {
+        setFormError(data.error || "حدث خطأ، حاول مرة أخرى");
+      } else {
+        setSubmitted(true);
+      }
     } catch {
-      setSubmitted(true);
+      setFormError("حدث خطأ في الاتصال، حاول مرة أخرى");
     }
     setSubmitting(false);
   };
@@ -494,6 +501,11 @@ export default function PricingPage() {
                       placeholder="مثال: نبي نأتمت متابعة العملاء المحتملين..."
                     />
                   </div>
+                  {formError && (
+                    <p className="text-sm text-center px-3 py-2 rounded-xl" style={{ background: "rgba(255,60,60,0.1)", border: "1px solid rgba(255,60,60,0.3)", color: "#ff6b6b" }}>
+                      {formError}
+                    </p>
+                  )}
                   <button
                     type="submit"
                     disabled={submitting}

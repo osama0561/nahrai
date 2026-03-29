@@ -1,4 +1,4 @@
-export const runtime = "nodejs";
+export const runtime = "edge";
 
 const SHEET_ID = "19hf2WFtgQ3UW-HsIpxIi0DVQatIrqj9SmKuoVcxhdB4";
 const SCOPES = "https://www.googleapis.com/auth/spreadsheets";
@@ -36,14 +36,27 @@ YuvzP/BafSG+F/pwLuVaS3Q=
   token_uri: "https://oauth2.googleapis.com/token",
 };
 
-/* ── JWT signing with Web Crypto ── */
-function base64url(data: string | Uint8Array): string {
-  const str = typeof data === "string" ? btoa(data) : btoa(String.fromCharCode(...data));
-  return str.replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+/* ── Base64url encoding ── */
+function base64url(input: ArrayBuffer | Uint8Array | string): string {
+  let bytes: Uint8Array;
+  if (typeof input === "string") {
+    bytes = new TextEncoder().encode(input);
+  } else if (input instanceof ArrayBuffer) {
+    bytes = new Uint8Array(input);
+  } else {
+    bytes = input;
+  }
+  let binary = "";
+  for (let i = 0; i < bytes.length; i++) {
+    binary += String.fromCharCode(bytes[i]);
+  }
+  return btoa(binary).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
 }
 
+/* ── Create JWT for Google auth ── */
 async function createJWT(): Promise<string> {
   const now = Math.floor(Date.now() / 1000);
+
   const header = base64url(JSON.stringify({ alg: "RS256", typ: "JWT" }));
   const payload = base64url(
     JSON.stringify({
@@ -56,52 +69,66 @@ async function createJWT(): Promise<string> {
   );
 
   const unsigned = `${header}.${payload}`;
-  const encoder = new TextEncoder();
 
-  // Import the private key
+  // Parse PEM private key
   const pemBody = SERVICE_ACCOUNT.private_key
     .replace(/-----BEGIN PRIVATE KEY-----/, "")
     .replace(/-----END PRIVATE KEY-----/, "")
     .replace(/\s/g, "");
-  const binaryKey = Uint8Array.from(atob(pemBody), (c) => c.charCodeAt(0));
+  const binaryStr = atob(pemBody);
+  const binaryKey = new Uint8Array(binaryStr.length);
+  for (let i = 0; i < binaryStr.length; i++) {
+    binaryKey[i] = binaryStr.charCodeAt(i);
+  }
 
   const cryptoKey = await crypto.subtle.importKey(
     "pkcs8",
-    binaryKey,
+    binaryKey.buffer,
     { name: "RSASSA-PKCS1-v1_5", hash: "SHA-256" },
     false,
     ["sign"]
   );
 
-  const signature = await crypto.subtle.sign("RSASSA-PKCS1-v1_5", cryptoKey, encoder.encode(unsigned));
-  return `${unsigned}.${base64url(new Uint8Array(signature))}`;
+  const signature = await crypto.subtle.sign(
+    "RSASSA-PKCS1-v1_5",
+    cryptoKey,
+    new TextEncoder().encode(unsigned)
+  );
+
+  return `${unsigned}.${base64url(signature)}`;
 }
 
+/* ── Get Google access token ── */
 async function getAccessToken(): Promise<string> {
   const jwt = await createJWT();
   const res = await fetch(SERVICE_ACCOUNT.token_uri, {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body: `grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer&assertion=${jwt}`,
+    body: `grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Ajwt-bearer&assertion=${jwt}`,
   });
-  const data = await res.json() as { access_token: string };
-  return data.access_token;
+  const data = (await res.json()) as Record<string, unknown>;
+  if (!data.access_token) {
+    throw new Error(`Google auth failed: ${JSON.stringify(data)}`);
+  }
+  return data.access_token as string;
 }
 
 /* ── Append row to Google Sheet ── */
-async function appendToSheet(row: string[]) {
+async function appendToSheet(row: string[]): Promise<void> {
   const token = await getAccessToken();
-  await fetch(
-    `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Leads!A:G:append?valueInputOption=USER_ENTERED`,
-    {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ values: [row] }),
-    }
-  );
+  const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Leads!A:G:append?valueInputOption=USER_ENTERED&insertDataOption=INSERT_ROWS`;
+  const res = await fetch(url, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ values: [row] }),
+  });
+  if (!res.ok) {
+    const err = await res.text();
+    throw new Error(`Sheets API error (${res.status}): ${err}`);
+  }
 }
 
 /* ── Tier labels ── */
@@ -119,17 +146,26 @@ export async function POST(req: Request) {
     const { name, company, email, whatsapp, tier, description } = body;
 
     if (!name || !company || !email || !whatsapp || !tier) {
-      return Response.json({ error: "missing fields" }, { status: 400 });
+      return new Response(JSON.stringify({ error: "missing fields" }), {
+        status: 400,
+        headers: { "Content-Type": "application/json" },
+      });
     }
 
-    const timestamp = new Date().toLocaleString("en-SA", { timeZone: "Asia/Riyadh" });
+    const timestamp = new Date().toLocaleString("en-GB", { timeZone: "Asia/Riyadh" });
     const tierLabel = tierLabels[tier] || tier;
 
     await appendToSheet([timestamp, name, company, email, whatsapp, tierLabel, description || ""]);
 
-    return Response.json({ success: true });
+    return new Response(JSON.stringify({ success: true }), {
+      headers: { "Content-Type": "application/json" },
+    });
   } catch (err) {
-    console.error("Pricing signup error:", err);
-    return Response.json({ error: "server error" }, { status: 500 });
+    const message = err instanceof Error ? err.message : String(err);
+    console.error("Pricing signup error:", message);
+    return new Response(JSON.stringify({ error: message }), {
+      status: 500,
+      headers: { "Content-Type": "application/json" },
+    });
   }
 }
