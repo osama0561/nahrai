@@ -1,6 +1,54 @@
 "use client";
 import { useEffect, useState, useRef } from "react";
-import { CheckCircle, Star, Zap, Crown, TrendingUp, Clock, Users, X, Send, Wrench, Bot } from "lucide-react";
+import { CheckCircle, Star, Zap, Crown, TrendingUp, Clock, Users, X, Send, Wrench, Bot, ChevronDown, Search } from "lucide-react";
+
+/* ─── Country Codes ─── */
+const countryCodes = [
+  { code: "+966", flag: "🇸🇦", name: "السعودية", nameEn: "Saudi Arabia" },
+  { code: "+971", flag: "🇦🇪", name: "الإمارات", nameEn: "UAE" },
+  { code: "+973", flag: "🇧🇭", name: "البحرين", nameEn: "Bahrain" },
+  { code: "+968", flag: "🇴🇲", name: "عُمان", nameEn: "Oman" },
+  { code: "+965", flag: "🇰🇼", name: "الكويت", nameEn: "Kuwait" },
+  { code: "+974", flag: "🇶🇦", name: "قطر", nameEn: "Qatar" },
+  { code: "+20", flag: "🇪🇬", name: "مصر", nameEn: "Egypt" },
+  { code: "+962", flag: "🇯🇴", name: "الأردن", nameEn: "Jordan" },
+  { code: "+961", flag: "🇱🇧", name: "لبنان", nameEn: "Lebanon" },
+  { code: "+964", flag: "🇮🇶", name: "العراق", nameEn: "Iraq" },
+  { code: "+212", flag: "🇲🇦", name: "المغرب", nameEn: "Morocco" },
+  { code: "+216", flag: "🇹🇳", name: "تونس", nameEn: "Tunisia" },
+  { code: "+213", flag: "🇩🇿", name: "الجزائر", nameEn: "Algeria" },
+  { code: "+249", flag: "🇸🇩", name: "السودان", nameEn: "Sudan" },
+  { code: "+218", flag: "🇱🇾", name: "ليبيا", nameEn: "Libya" },
+  { code: "+967", flag: "🇾🇪", name: "اليمن", nameEn: "Yemen" },
+  { code: "+963", flag: "🇸🇾", name: "سوريا", nameEn: "Syria" },
+  { code: "+970", flag: "🇵🇸", name: "فلسطين", nameEn: "Palestine" },
+  { code: "+90", flag: "🇹🇷", name: "تركيا", nameEn: "Turkey" },
+  { code: "+44", flag: "🇬🇧", name: "بريطانيا", nameEn: "United Kingdom" },
+  { code: "+1", flag: "🇺🇸", name: "أمريكا", nameEn: "United States" },
+  { code: "+49", flag: "🇩🇪", name: "ألمانيا", nameEn: "Germany" },
+  { code: "+33", flag: "🇫🇷", name: "فرنسا", nameEn: "France" },
+  { code: "+91", flag: "🇮🇳", name: "الهند", nameEn: "India" },
+  { code: "+92", flag: "🇵🇰", name: "باكستان", nameEn: "Pakistan" },
+  { code: "+60", flag: "🇲🇾", name: "ماليزيا", nameEn: "Malaysia" },
+  { code: "+62", flag: "🇮🇩", name: "إندونيسيا", nameEn: "Indonesia" },
+  { code: "+234", flag: "🇳🇬", name: "نيجيريا", nameEn: "Nigeria" },
+  { code: "+27", flag: "🇿🇦", name: "جنوب أفريقيا", nameEn: "South Africa" },
+  { code: "+55", flag: "🇧🇷", name: "البرازيل", nameEn: "Brazil" },
+  { code: "+86", flag: "🇨🇳", name: "الصين", nameEn: "China" },
+  { code: "+81", flag: "🇯🇵", name: "اليابان", nameEn: "Japan" },
+  { code: "+82", flag: "🇰🇷", name: "كوريا الجنوبية", nameEn: "South Korea" },
+  { code: "+61", flag: "🇦🇺", name: "أستراليا", nameEn: "Australia" },
+  { code: "+31", flag: "🇳🇱", name: "هولندا", nameEn: "Netherlands" },
+  { code: "+34", flag: "🇪🇸", name: "إسبانيا", nameEn: "Spain" },
+  { code: "+39", flag: "🇮🇹", name: "إيطاليا", nameEn: "Italy" },
+  { code: "+46", flag: "🇸🇪", name: "السويد", nameEn: "Sweden" },
+  { code: "+41", flag: "🇨🇭", name: "سويسرا", nameEn: "Switzerland" },
+  { code: "+7", flag: "🇷🇺", name: "روسيا", nameEn: "Russia" },
+  { code: "+52", flag: "🇲🇽", name: "المكسيك", nameEn: "Mexico" },
+  { code: "+63", flag: "🇵🇭", name: "الفلبين", nameEn: "Philippines" },
+  { code: "+66", flag: "🇹🇭", name: "تايلاند", nameEn: "Thailand" },
+  { code: "+65", flag: "🇸🇬", name: "سنغافورة", nameEn: "Singapore" },
+];
 
 /* ─── Monthly Retainer Tiers ─── */
 const monthlyTiers = [
@@ -107,6 +155,10 @@ export default function PricingPage() {
   const [formOpen, setFormOpen] = useState(false);
   const [selectedTier, setSelectedTier] = useState("");
   const [formData, setFormData] = useState({ name: "", company: "", email: "", whatsapp: "", description: "" });
+  const [countryCode, setCountryCode] = useState("+966");
+  const [countryDropdownOpen, setCountryDropdownOpen] = useState(false);
+  const [countrySearch, setCountrySearch] = useState("");
+  const countryDropdownRef = useRef<HTMLDivElement>(null);
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [formError, setFormError] = useState("");
@@ -120,6 +172,17 @@ export default function PricingPage() {
       gsap.fromTo(".pricing-hero", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.8, stagger: 0.2, ease: "power3.out", delay: 0.3 });
     };
     load();
+  }, []);
+
+  /* Close country dropdown on outside click */
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (countryDropdownRef.current && !countryDropdownRef.current.contains(e.target as Node)) {
+        setCountryDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
   }, []);
 
   /* Re-animate cards on tab switch */
@@ -147,7 +210,7 @@ export default function PricingPage() {
       const res = await fetch("/api/pricing-signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...formData, tier: selectedTier }),
+        body: JSON.stringify({ ...formData, whatsapp: `${countryCode}${formData.whatsapp}`, tier: selectedTier }),
       });
       const data = await res.json();
       if (!res.ok) {
@@ -479,16 +542,76 @@ export default function PricingPage() {
                   </div>
                   <div>
                     <label className="text-xs font-medium mb-1.5 block" style={{ color: "rgba(240,244,255,0.6)" }}>رقم الواتساب</label>
-                    <input
-                      required
-                      type="tel"
-                      value={formData.whatsapp}
-                      onChange={(e) => setFormData(prev => ({ ...prev, whatsapp: e.target.value }))}
-                      className="w-full px-4 py-3 rounded-xl text-sm outline-none transition-colors"
-                      style={{ background: "#020B19", border: "1px solid rgba(0,163,255,0.15)", color: "#F0F4FF" }}
-                      dir="ltr"
-                      placeholder="+966 5XX XXX XXXX"
-                    />
+                    <div className="flex gap-2" dir="ltr">
+                      {/* Country code selector */}
+                      <div className="relative" ref={countryDropdownRef}>
+                        <button
+                          type="button"
+                          onClick={() => { setCountryDropdownOpen(!countryDropdownOpen); setCountrySearch(""); }}
+                          className="flex items-center gap-1.5 px-3 py-3 rounded-xl text-sm cursor-pointer whitespace-nowrap"
+                          style={{ background: "#020B19", border: "1px solid rgba(0,163,255,0.15)", color: "#F0F4FF", minWidth: "100px" }}
+                        >
+                          <span>{countryCodes.find(c => c.code === countryCode)?.flag}</span>
+                          <span>{countryCode}</span>
+                          <ChevronDown size={14} style={{ color: "rgba(240,244,255,0.4)" }} />
+                        </button>
+
+                        {countryDropdownOpen && (
+                          <div
+                            className="absolute top-full left-0 mt-1 rounded-xl overflow-hidden z-50"
+                            style={{ background: "#0A1628", border: "1px solid rgba(0,163,255,0.25)", boxShadow: "0 8px 30px rgba(0,0,0,0.4)", width: "280px", maxHeight: "250px" }}
+                          >
+                            {/* Search */}
+                            <div className="p-2" style={{ borderBottom: "1px solid rgba(0,163,255,0.1)" }}>
+                              <div className="flex items-center gap-2 px-3 py-2 rounded-lg" style={{ background: "#020B19", border: "1px solid rgba(0,163,255,0.15)" }}>
+                                <Search size={14} style={{ color: "rgba(240,244,255,0.3)" }} />
+                                <input
+                                  autoFocus
+                                  value={countrySearch}
+                                  onChange={(e) => setCountrySearch(e.target.value)}
+                                  placeholder="Search..."
+                                  className="bg-transparent outline-none text-sm flex-1"
+                                  style={{ color: "#F0F4FF" }}
+                                />
+                              </div>
+                            </div>
+                            {/* List */}
+                            <div style={{ maxHeight: "200px", overflowY: "auto" }}>
+                              {countryCodes
+                                .filter(c =>
+                                  c.name.includes(countrySearch) ||
+                                  c.nameEn.toLowerCase().includes(countrySearch.toLowerCase()) ||
+                                  c.code.includes(countrySearch)
+                                )
+                                .map((c) => (
+                                  <button
+                                    key={c.code}
+                                    type="button"
+                                    onClick={() => { setCountryCode(c.code); setCountryDropdownOpen(false); }}
+                                    className="w-full flex items-center gap-3 px-3 py-2.5 text-sm cursor-pointer transition-colors hover:bg-[rgba(0,163,255,0.08)]"
+                                    style={{ color: "#F0F4FF" }}
+                                  >
+                                    <span className="text-base">{c.flag}</span>
+                                    <span className="flex-1 text-right" dir="rtl">{c.name}</span>
+                                    <span style={{ color: "rgba(240,244,255,0.4)", fontFamily: "IBM Plex Mono", fontSize: "12px" }}>{c.code}</span>
+                                  </button>
+                                ))}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Phone number */}
+                      <input
+                        required
+                        type="tel"
+                        value={formData.whatsapp}
+                        onChange={(e) => setFormData(prev => ({ ...prev, whatsapp: e.target.value }))}
+                        className="flex-1 px-4 py-3 rounded-xl text-sm outline-none transition-colors"
+                        style={{ background: "#020B19", border: "1px solid rgba(0,163,255,0.15)", color: "#F0F4FF" }}
+                        placeholder="5XX XXX XXXX"
+                      />
+                    </div>
                   </div>
                   <div>
                     <label className="text-xs font-medium mb-1.5 block" style={{ color: "rgba(240,244,255,0.6)" }}>وصف مختصر لمشكلتك <span style={{ color: "rgba(240,244,255,0.25)" }}>(اختياري)</span></label>
