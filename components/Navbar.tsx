@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Menu, X } from "lucide-react";
 
 const links = [
@@ -29,7 +30,8 @@ export default function Navbar() {
       style={{ border: scrolled ? "1px solid rgba(0,163,255,0.15)" : "1px solid transparent" }}
     >
       {/* Logo right (RTL = visual left) */}
-      <Link href="/" className="flex items-center gap-2 select-none">
+      <Link href="/" className="flex items-center gap-2.5 select-none">
+        <Image src="/logo.svg" alt="نهر AI" width={36} height={14} className="h-auto" />
         <span
           className="text-xl font-bold"
           style={{

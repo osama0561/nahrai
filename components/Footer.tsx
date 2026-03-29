@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Footer() {
   return (
@@ -14,7 +15,8 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           {/* Brand */}
           <div>
-            <div className="flex items-center gap-2 mb-4">
+            <div className="flex items-center gap-2.5 mb-4">
+              <Image src="/logo.svg" alt="نهر AI" width={40} height={16} className="h-auto" />
               <span className="text-2xl font-bold" style={{ color: "#00A3FF", fontFamily: "'IBM Plex Sans Arabic'" }}>نهر</span>
               <span className="font-mono text-sm px-2 py-0.5 rounded-lg" style={{ background: "rgba(0,163,255,0.15)", color: "#00A3FF" }}>AI</span>
             </div>
