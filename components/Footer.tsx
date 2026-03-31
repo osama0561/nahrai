@@ -34,7 +34,6 @@ export default function Footer() {
               {[
                 { href: "/", label: "الرئيسية" },
                 { href: "/services", label: "خدماتنا" },
-                { href: "/pricing", label: "الباقات" },
                 { href: "/about", label: "من نحن" },
                 { href: "/contact", label: "تواصل معنا" },
               ].map((l) => (
