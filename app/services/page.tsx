@@ -197,10 +197,6 @@ export default function ServicesPage() {
             <button onClick={() => window.dispatchEvent(new CustomEvent("open-consultation"))} className="btn-primary text-base py-4 px-8">
               <span>احجز استشارة</span>
             </button>
-            <Link href="/pricing-m4vltu" className="btn-outline text-base py-4 px-8">
-              <span>شاهد الباقات</span>
-              <ArrowLeft size={16} />
-            </Link>
           </div>
         </div>
       </section>
