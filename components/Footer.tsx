@@ -63,12 +63,6 @@ export default function Footer() {
           <p className="text-xs" style={{ color: "rgba(240,244,255,0.35)" }}>
             © {new Date().getFullYear()} نهر AI — جميع الحقوق محفوظة
           </p>
-          <div className="flex items-center gap-2">
-            <span className="pulse-dot"></span>
-            <span className="font-mono text-xs" style={{ color: "rgba(240,244,255,0.45)", fontFamily: "IBM Plex Mono" }}>
-              الأنظمة تعمل
-            </span>
-          </div>
         </div>
       </div>
     </footer>
