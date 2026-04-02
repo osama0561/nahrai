@@ -169,10 +169,10 @@ export default function AboutPage() {
       <section className="py-24 px-6 text-center" style={{ background: "#020B19" }}>
         <div className="max-w-3xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold mb-6">هل شركتك جاهزة للتحول؟</h2>
-          <p className="text-base mb-10" style={{ color: "rgba(240,244,255,0.55)" }}>استشارة مجانية — نفهم عملياتك ونريك ما يمكن تحويله.</p>
+          <p className="text-base mb-10" style={{ color: "rgba(240,244,255,0.55)" }}>نفهم عملياتك ونريك ما يمكن تحويله.</p>
           <div className="flex flex-wrap gap-4 justify-center">
             <Link href="/contact" className="btn-primary text-base py-4 px-8">
-              <span>احجز استشارة مجانية</span>
+              <span>احجز استشارة</span>
             </Link>
             <Link href="/services" className="btn-outline text-base py-4 px-8">
               <span>شاهد خدماتنا</span>

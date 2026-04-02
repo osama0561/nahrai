@@ -74,8 +74,8 @@ function HeroSection() {
             <span>اكتشف كيف نعمل</span>
             <ArrowLeft size={16} />
           </Link>
-          <button onClick={() => window.dispatchEvent(new CustomEvent("open-chat"))} className="hero-cta btn-primary" style={{ opacity: 0 }}>
-            <span>احجز استشارة مجانية</span>
+          <button onClick={() => window.dispatchEvent(new CustomEvent("open-consultation"))} className="hero-cta btn-primary" style={{ opacity: 0 }}>
+            <span>احجز استشارة</span>
           </button>
         </div>
       </div>
@@ -461,10 +461,10 @@ function CTAStrip() {
           <span style={{ color: "#00A3FF" }} className="text-glow">حقيقية</span>
         </h2>
         <p className="text-base mb-10" style={{ color: "rgba(240,244,255,0.55)" }}>
-          استشارة مجانية — نشرح لك بالضبط ما يمكن أتمتته في شركتك خلال ٩٠ يوماً.
+          نشرح لك بالضبط ما يمكن أتمتته في شركتك خلال ٩٠ يوماً.
         </p>
-        <button onClick={() => window.dispatchEvent(new CustomEvent("open-chat"))} className="btn-primary text-lg py-4 px-10 electric-glow-strong">
-          <span>احجز استشارة مجانية</span>
+        <button onClick={() => window.dispatchEvent(new CustomEvent("open-consultation"))} className="btn-primary text-lg py-4 px-10 electric-glow-strong">
+          <span>احجز استشارة</span>
         </button>
       </div>
     </section>

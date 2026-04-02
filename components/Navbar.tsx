@@ -66,7 +66,7 @@ export default function Navbar() {
 
       {/* CTA */}
       <div className="hidden md:flex">
-        <button onClick={() => window.dispatchEvent(new CustomEvent("open-chat"))} className="btn-primary text-sm py-2.5 px-5">
+        <button onClick={() => window.dispatchEvent(new CustomEvent("open-consultation"))} className="btn-primary text-sm py-2.5 px-5">
           <span>احجز استشارة</span>
         </button>
       </div>
@@ -98,7 +98,7 @@ export default function Navbar() {
           ))}
           <button
             className="btn-primary text-sm justify-center mt-2"
-            onClick={() => { setOpen(false); window.dispatchEvent(new CustomEvent("open-chat")); }}
+            onClick={() => { setOpen(false); window.dispatchEvent(new CustomEvent("open-consultation")); }}
           >
             <span>احجز استشارة</span>
           </button>
