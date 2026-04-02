@@ -35,7 +35,6 @@ export default function Footer() {
                 { href: "/", label: "الرئيسية" },
                 { href: "/services", label: "خدماتنا" },
                 { href: "/about", label: "من نحن" },
-                { href: "/contact", label: "تواصل معنا" },
               ].map((l) => (
                 <li key={l.href}>
                   <Link href={l.href} className="text-sm transition-colors hover:text-[#00A3FF]" style={{ color: "rgba(240,244,255,0.55)" }}>
