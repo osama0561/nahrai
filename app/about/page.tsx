@@ -171,9 +171,9 @@ export default function AboutPage() {
           <h2 className="text-3xl md:text-4xl font-bold mb-6">هل شركتك جاهزة للتحول؟</h2>
           <p className="text-base mb-10" style={{ color: "rgba(240,244,255,0.55)" }}>نفهم عملياتك ونريك ما يمكن تحويله.</p>
           <div className="flex flex-wrap gap-4 justify-center">
-            <Link href="/contact" className="btn-primary text-base py-4 px-8">
+            <button onClick={() => window.dispatchEvent(new CustomEvent("open-consultation"))} className="btn-primary text-base py-4 px-8">
               <span>احجز استشارة</span>
-            </Link>
+            </button>
             <Link href="/services" className="btn-outline text-base py-4 px-8">
               <span>شاهد خدماتنا</span>
               <ArrowLeft size={16} />
