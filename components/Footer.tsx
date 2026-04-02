@@ -52,9 +52,6 @@ export default function Footer() {
               <p>المملكة العربية السعودية</p>
               <p>متخصصون في قطاع اللوجستيات و B2B</p>
             </div>
-            <Link href="/contact" className="btn-primary text-sm py-2.5 px-5 mt-6 inline-flex">
-              <span>ابدأ الآن</span>
-            </Link>
           </div>
         </div>
 
