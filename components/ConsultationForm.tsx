@@ -45,6 +45,7 @@ export default function ConsultationForm() {
   const [countryCode, setCountryCode] = useState("+966");
   const [countryDropdownOpen, setCountryDropdownOpen] = useState(false);
   const [countrySearch, setCountrySearch] = useState("");
+  const [website, setWebsite] = useState("");
   const [revenue, setRevenue] = useState("");
   const [budget, setBudget] = useState("");
   const [submitting, setSubmitting] = useState(false);
@@ -77,7 +78,7 @@ export default function ConsultationForm() {
 
   const resetForm = () => {
     setFirstName(""); setLastName(""); setEmail(""); setPhone("");
-    setCountryCode("+966"); setRevenue(""); setBudget("");
+    setCountryCode("+966"); setWebsite(""); setRevenue(""); setBudget("");
     setSubmitted(false); setError("");
   };
 
@@ -85,7 +86,7 @@ export default function ConsultationForm() {
     e.preventDefault();
     if (submitting) return;
 
-    if (!firstName || !lastName || !email || !phone || !revenue || !budget) {
+    if (!firstName || !lastName || !email || !phone || !website || !revenue || !budget) {
       setError("يرجى تعبئة جميع الحقول");
       return;
     }
@@ -105,7 +106,7 @@ export default function ConsultationForm() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           name: `${firstName} ${lastName}`,
-          company: "-",
+          company: website,
           email,
           whatsapp: `${countryCode}${phone}`,
           tier: "استشارة",
@@ -188,6 +189,21 @@ export default function ConsultationForm() {
                   style={{ background: "#020B19", border: "1px solid rgba(0,163,255,0.15)", color: "#F0F4FF" }}
                   dir="ltr"
                   placeholder="email@company.com"
+                />
+              </div>
+
+              {/* Website */}
+              <div>
+                <label className="text-xs font-medium mb-1.5 block" style={{ color: "rgba(240,244,255,0.6)" }}>موقع الشركة</label>
+                <input
+                  required
+                  type="url"
+                  value={website}
+                  onChange={(e) => setWebsite(e.target.value)}
+                  className="w-full px-4 py-3 rounded-xl text-sm outline-none"
+                  style={{ background: "#020B19", border: "1px solid rgba(0,163,255,0.15)", color: "#F0F4FF" }}
+                  dir="ltr"
+                  placeholder="https://example.com"
                 />
               </div>
 
