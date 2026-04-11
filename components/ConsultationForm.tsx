@@ -47,6 +47,7 @@ export default function ConsultationForm() {
   const [countrySearch, setCountrySearch] = useState("");
   const [website, setWebsite] = useState("");
   const [revenue, setRevenue] = useState("");
+  const [challenge, setChallenge] = useState("");
   const [budget, setBudget] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -78,7 +79,7 @@ export default function ConsultationForm() {
 
   const resetForm = () => {
     setFirstName(""); setLastName(""); setEmail(""); setPhone("");
-    setCountryCode("+966"); setWebsite(""); setRevenue(""); setBudget("");
+    setCountryCode("+966"); setWebsite(""); setRevenue(""); setChallenge(""); setBudget("");
     setSubmitted(false); setError("");
   };
 
@@ -86,7 +87,7 @@ export default function ConsultationForm() {
     e.preventDefault();
     if (submitting) return;
 
-    if (!firstName || !lastName || !email || !phone || !website || !revenue || !budget) {
+    if (!firstName || !lastName || !email || !phone || !website || !revenue || !challenge || !budget) {
       setError("يرجى تعبئة جميع الحقول");
       return;
     }
@@ -110,7 +111,7 @@ export default function ConsultationForm() {
           email,
           whatsapp: `${countryCode}${phone}`,
           tier: "استشارة",
-          description: `الإيرادات: ${revenue} | الميزانية: ${budget}`,
+          description: `الإيرادات: ${revenue} | التحديات: ${challenge} | الميزانية: ${budget}`,
         }),
       });
       setSubmitted(true);
@@ -305,9 +306,23 @@ export default function ConsultationForm() {
                 </div>
               </div>
 
+              {/* Challenge */}
+              <div>
+                <label className="text-xs font-medium mb-1.5 block" style={{ color: "rgba(240,244,255,0.6)" }}>ما التحديات التي تواجهها أو ما الذي تأمل أن نساعدك في حلّه؟</label>
+                <textarea
+                  required
+                  value={challenge}
+                  onChange={(e) => setChallenge(e.target.value)}
+                  rows={3}
+                  className="w-full px-4 py-3 rounded-xl text-sm outline-none resize-none"
+                  style={{ background: "#020B19", border: "1px solid rgba(0,163,255,0.15)", color: "#F0F4FF" }}
+                  placeholder="مثال: نبي نأتمت عمليات المبيعات، أو نقلل الشغل اليدوي..."
+                />
+              </div>
+
               {/* Budget */}
               <div>
-                <label className="text-xs font-medium mb-1.5 block" style={{ color: "rgba(240,244,255,0.6)" }}>ميزانيتنا تبدأ من ٥,٠٠٠ إلى ٦٠,٠٠٠ ريال. هل هذا مناسب لك؟</label>
+                <label className="text-xs font-medium mb-1.5 block" style={{ color: "rgba(240,244,255,0.6)" }}>ميزانيتنا تبدأ من ٢٠,٠٠٠ ريال وأعلى. هل هذا مناسب لك؟</label>
                 <div className="relative">
                   <select
                     required
