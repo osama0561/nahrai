@@ -57,17 +57,17 @@ function HeroSection() {
 
       <div className="relative z-20 max-w-3xl text-right">
         <p className="hero-line1 text-lg font-medium mb-3" style={{ color: "rgba(240,244,255,0.65)", opacity: 0 }}>
-          معظم الشركات تشتري أدوات —
+          أنظمتك موجودة — لكنها لا تتحدث مع بعضها.
         </p>
         <h1
           className="hero-line2 leading-none mb-6 font-serif"
           style={{ fontSize: "clamp(3.5rem, 8vw, 7rem)", fontFamily: "'Noto Naskh Arabic', serif", color: "#F0F4FF", fontStyle: "italic", opacity: 0, lineHeight: 1.1 }}
         >
-          نهر تبني{" "}
-          <span style={{ color: "#00A3FF" }} className="text-glow">الأنظمة.</span>
+          نهر توحّد{" "}
+          <span style={{ color: "#00A3FF" }} className="text-glow">أنظمتك.</span>
         </h1>
-        <p className="hero-sub text-base md:text-lg mb-8 leading-relaxed" style={{ color: "rgba(240,244,255,0.6)", opacity: 0, maxWidth: "540px" }}>
-          وكالة أتمتة تبني البنية التشغيلية الرقمية لشركات B2B في المملكة العربية السعودية — نولّد العملاء ونؤتمت العمليات بالذكاء الاصطناعي.
+        <p className="hero-sub text-base md:text-lg mb-8 leading-relaxed" style={{ color: "rgba(240,244,255,0.6)", opacity: 0, maxWidth: "560px" }}>
+          بنية أتمتة على مستوى المؤسسات — نربط ERP و CRM وأدواتك اليومية في منظومة واحدة تعمل بالذكاء الاصطناعي. للشركات السعودية من ١٠ ملايين ريال فأعلى.
         </p>
         <div className="flex flex-wrap gap-4 justify-end">
           <Link href="/services" className="hero-cta btn-outline" style={{ opacity: 0 }}>
@@ -85,10 +85,10 @@ function HeroSection() {
 
 // ─── PROBLEM ─────────────────────────────────────────────────────────────────
 const painPoints = [
-  { icon: Zap, title: "عمليات يدوية تستنزف الفريق", desc: "ساعات يومية تُهدر على مهام يمكن أتمتتها بالكامل — وقت يمكن استثماره في النمو." },
-  { icon: Link2, title: "أدوات منفصلة لا تتحدث مع بعضها", desc: "ERP هنا، CRM هناك، تقارير يدوية في Excel — فوضى تقنية تعيق القرارات السريعة." },
-  { icon: Brain, title: "صفر تبني في الذكاء الاصطناعي", desc: "منافسوك يبنون بسرعة. كل يوم تأخير هو تكلفة حقيقية — ليست فرصة فائتة فحسب." },
-  { icon: Globe, title: "حضور رقمي ضعيف يخسر العملاء", desc: "موقعك ووجودك الرقمي لا يعكسان حجم شركتك الحقيقي — وهذا يكلفك صفقات يومياً." },
+  { icon: Link2, title: "أنظمة معزولة: ERP في وادٍ و CRM في وادٍ آخر", desc: "بيانات العميل مبعثرة بين SAP والـ CRM وملفات Excel. التقارير تتأخر، والقرارات تُتَّخذ بمعلومات ناقصة." },
+  { icon: Zap, title: "عمليات يدوية على مستوى المؤسسات", desc: "فِرَق كاملة تُدخل البيانات من نظام إلى آخر يومياً — كلفة حقيقية في الوقت، والأخطاء البشرية، وسرعة التنفيذ." },
+  { icon: Brain, title: "ذكاء اصطناعي بلا جذور في أنظمتك", desc: "شراء أدوات AI منفصلة لا يحل المشكلة. القيمة الحقيقية تأتي من وكلاء يعملون فوق ERP و CRM الحاليَين — لا بمعزل عنهما." },
+  { icon: Globe, title: "نمو الشركة يسبق بنيتها التقنية", desc: "العمليات التي تصلح لـ ١٠ موظفين تنهار عند ١٠٠. بدون بنية أتمتة قابلة للتوسع، النمو يصبح عبئاً لا فرصة." },
 ];
 
 function ProblemSection() {
@@ -109,8 +109,8 @@ function ProblemSection() {
         <div className="text-center mb-16">
           <p className="text-sm mb-3" style={{ color: "#00A3FF", fontFamily: "IBM Plex Mono" }}>المشكلة</p>
           <h2 className="text-3xl md:text-5xl font-bold leading-tight">
-            شركتك تخسر كل يوم —{" "}
-            <span style={{ color: "#00A3FF" }}>وأنت تعرف ذلك</span>
+            بنيتك التقنية{" "}
+            <span style={{ color: "#00A3FF" }}>تعيق نموّك</span>
           </h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -131,10 +131,92 @@ function ProblemSection() {
   );
 }
 
+// ─── INTEGRATIONS MARQUEE ────────────────────────────────────────────────────
+const integrationsRowA = [
+  { name: "SAP", src: "/integrations/sap.svg" },
+  { name: "Oracle NetSuite", src: "/integrations/oracle-netsuite.svg" },
+  { name: "Microsoft Dynamics 365", src: "/integrations/ms-dynamics.svg" },
+  { name: "Odoo", src: "/integrations/odoo.svg" },
+  { name: "Sage", src: "/integrations/sage.svg" },
+  { name: "Zoho One", src: "/integrations/zoho-one.svg" },
+  { name: "Salesforce", src: "/integrations/salesforce.svg" },
+];
+
+const integrationsRowB = [
+  { name: "Zoho CRM", src: "/integrations/zoho-crm.svg" },
+  { name: "Zoho Books", src: "/integrations/zoho-books.svg" },
+  { name: "Qoyod", src: "/integrations/qoyod.svg" },
+  { name: "Daftra", src: "/integrations/daftra.svg" },
+  { name: "ZATCA e-Invoice", src: "/integrations/zatca.svg" },
+  { name: "WhatsApp Business", src: "/integrations/whatsapp-business.svg" },
+  { name: "HubSpot", src: "/integrations/hubspot.svg" },
+];
+
+function IntegrationsSection() {
+  const ref = useRef<HTMLElement>(null);
+  useEffect(() => {
+    const load = async () => {
+      const { gsap } = await import("gsap");
+      const { ScrollTrigger } = await import("gsap/ScrollTrigger");
+      gsap.registerPlugin(ScrollTrigger);
+      gsap.fromTo(
+        ref.current?.querySelectorAll(".integ-fade") || [],
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 0.9, stagger: 0.1, ease: "power3.out", scrollTrigger: { trigger: ref.current, start: "top 80%" } }
+      );
+    };
+    load();
+  }, []);
+
+  return (
+    <section ref={ref} className="py-24 px-6 overflow-hidden" style={{ background: "#081122" }}>
+      <div className="max-w-6xl mx-auto">
+        <div className="text-center mb-14">
+          <p className="integ-fade text-sm mb-4" style={{ color: "#00A3FF", fontFamily: "IBM Plex Mono", opacity: 0 }}>
+            الأنظمة التي نربطها
+          </p>
+          <h2 className="integ-fade text-3xl md:text-5xl font-bold leading-tight mb-5" style={{ opacity: 0 }}>
+            بياناتك تتحدث مع بعضها.{" "}
+            <span style={{ color: "#00A3FF" }} className="text-glow">أدواتك تعمل كمنظومة واحدة.</span>
+          </h2>
+          <p className="integ-fade text-base md:text-lg max-w-2xl mx-auto" style={{ color: "rgba(240,244,255,0.6)", opacity: 0 }}>
+            نربط ونؤتمت الأنظمة التي تعتمد عليها شركتك — من ERP الكبرى إلى الأدوات اليومية — في منظومة تعمل بلا لمسة يدوية.
+          </p>
+        </div>
+
+        <div className="integ-fade marquee-mask flex flex-col gap-5" style={{ opacity: 0 }}>
+          <div className="marquee-row overflow-hidden" dir="ltr">
+            <div className="marquee-track marquee-track-ltr">
+              {[...integrationsRowA, ...integrationsRowA].map((logo, i) => (
+                <div key={`a-${i}`} className="logo-mark" aria-label={logo.name}>
+                  <img src={logo.src} alt={logo.name} />
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="marquee-row overflow-hidden" dir="ltr">
+            <div className="marquee-track marquee-track-rtl">
+              {[...integrationsRowB, ...integrationsRowB].map((logo, i) => (
+                <div key={`b-${i}`} className="logo-mark" aria-label={logo.name}>
+                  <img src={logo.src} alt={logo.name} />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <p className="integ-fade text-xs text-center mt-8 leading-relaxed max-w-2xl mx-auto" style={{ color: "rgba(240,244,255,0.35)", opacity: 0 }}>
+          * الأسماء والعلامات المذكورة تعود لأصحابها. نحن نُنفذ التكاملات والأتمتة مع هذه الأنظمة — لسنا شركاء رسميين.
+        </p>
+      </div>
+    </section>
+  );
+}
+
 // ─── WHAT WE BUILD ────────────────────────────────────────────────────────────
 const services = [
   { icon: Bot, title: "وكلاء الذكاء الاصطناعي", subtitle: "يعملون باستقلالية داخل شركتك", desc: "وكلاء ذكاء اصطناعي متخصصون يعملون على مدار الساعة: متابعة العملاء عبر واتساب، تحليل السوق والمنافسين تلقائياً، إدارة الحملات التسويقية، وتوليد تقارير الأداء.", examples: ["وكيل واتساب يرد ويتابع تلقائياً", "تحليل تنافسي أسبوعي آلي", "وكيل حملات بريد إلكتروني ذكي", "مساعد داخلي للفريق"] },
-  { icon: Workflow, title: "أنظمة الأتمتة", subtitle: "تلغي العمل اليدوي المتكرر", desc: "نربط أنظمتك معاً ونبني سير عمل آلية تحرر فريقك من المهام المتكررة: من توليد العروض إلى تحصيل المدفوعات.", examples: ["توليد عروض الأسعار تلقائياً", "نظام تأهيل وتوصيل العملاء", "تحصيل المدفوعات وإرسال الفواتير", "تقارير أسبوعية آلية"] },
+  { icon: Workflow, title: "أنظمة الأتمتة المؤسسية", subtitle: "نربط ERP و CRM وكل أدواتك", desc: "نربط أنظمتك المؤسسية معاً — SAP، Oracle، Microsoft Dynamics، Zoho، Odoo، NetSuite، Sage — ونبني فوقها طبقة أتمتة وذكاء اصطناعي تلغي العمل اليدوي، وتجعل بياناتك تتحرك بسلاسة بين الأقسام بدون تدخل بشري.", examples: ["تكامل ERP ⇄ CRM ⇄ واتساب في نظام واحد", "مزامنة البيانات بين الأنظمة لحظياً", "أتمتة الفواتير والتحصيل وZATCA", "تقارير تنفيذية موحّدة من كل مصادرك"] },
   { icon: AppWindow, title: "التطبيقات الداخلية", subtitle: "مبنية حول طريقة عمل شركتك", desc: "نبني تطبيقات ويب مخصصة تعكس عملياتك الفعلية — لا حلول جاهزة، بل أنظمة مصممة لك تحديداً.", examples: ["بوابات العملاء الذكية", "لوحات تتبع السائقين", "أنظمة إدارة الطلبات", "داشبورد عمليات مركزي"] },
   { icon: TrendingUp, title: "بنية النمو", subtitle: "يحول حضورك الرقمي لآلة توليد عملاء", desc: "نبني الجهاز الرقمي الكامل الذي يجلب لك عملاء جدد باستمرار — مواقع، صفحات هبوط، بريد بارد آلي، ومحتوى LinkedIn.", examples: ["مواقع عالية التحويل", "صفحات هبوط مُحسّنة", "نظام بريد بارد آلي", "١٦ منشور LinkedIn شهرياً"] },
   { icon: Lightbulb, title: "الاستشارة الاستراتيجية", subtitle: "قرارات صح في الذكاء الاصطناعي", desc: "نجلس معك شهرياً لمراجعة الأداء، تحديد الفرص الجديدة، ورسم خارطة الطريق للربع القادم.", examples: ["جلسات استراتيجية شهرية", "مراجعة الأداء والمؤشرات", "خارطة طريق الذكاء الاصطناعي", "توصيات تقنية مخصصة"] },
@@ -217,9 +299,9 @@ function PhilosophySection() {
 
   const words = [
     { text: "نهر", blue: false }, { text: "يبني:", blue: false },
-    { text: "أنظمة", blue: true }, { text: "لا", blue: true },
-    { text: "تستطيع", blue: true }, { text: "العمل", blue: true },
-    { text: "بدونها.", blue: true },
+    { text: "بنية", blue: true }, { text: "مؤسسية", blue: true },
+    { text: "لا", blue: true }, { text: "تستطيع", blue: true },
+    { text: "العمل", blue: true }, { text: "بدونها.", blue: true },
   ];
 
   return (
@@ -315,7 +397,7 @@ function WhoWeServeSection() {
         <p className="text-sm mb-3" style={{ color: "#00A3FF", fontFamily: "IBM Plex Mono" }}>من نخدم</p>
         <h2 className="text-3xl md:text-4xl font-bold mb-4">شركات B2B ذات العمليات المعقدة</h2>
         <p className="text-base mb-12 max-w-2xl mx-auto" style={{ color: "rgba(240,244,255,0.6)" }}>
-          عميلنا المثالي: شركة تملك فريقاً متمرساً وعمليات ضخمة — وتعرف أن الأتمتة ستغير مستوى أدائها.
+          عميلنا المثالي: شركات من ١٠ ملايين ريال سنوياً فأعلى — تملك عمليات معقدة وأنظمة متعددة تحتاج إلى توحيد وأتمتة حقيقية، لا مجرد أدوات إضافية.
         </p>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {sectors.map((s, i) => (
@@ -461,7 +543,7 @@ function CTAStrip() {
           <span style={{ color: "#00A3FF" }} className="text-glow">حقيقية</span>
         </h2>
         <p className="text-base mb-10" style={{ color: "rgba(240,244,255,0.55)" }}>
-          نشرح لك بالضبط ما يمكن أتمتته في شركتك خلال ٩٠ يوماً.
+          نحلل بنيتك التقنية ونُظهر لك بالضبط ما يمكن ربطه وأتمتته خلال ٩٠ يوماً.
         </p>
         <button onClick={() => window.dispatchEvent(new CustomEvent("open-consultation"))} className="btn-primary text-lg py-4 px-10 electric-glow-strong">
           <span>احجز استشارة</span>
@@ -477,6 +559,7 @@ export default function HomePage() {
     <>
       <HeroSection />
       <ProblemSection />
+      <IntegrationsSection />
       <WhatWeBuildSection />
       <PhilosophySection />
       <WhyStaySection />
