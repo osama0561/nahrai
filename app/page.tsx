@@ -133,23 +133,21 @@ function ProblemSection() {
 
 // ─── INTEGRATIONS MARQUEE ────────────────────────────────────────────────────
 const integrationsRowA = [
-  { name: "SAP", src: "/integrations/sap.svg" },
-  { name: "Oracle NetSuite", src: "/integrations/oracle-netsuite.svg" },
-  { name: "Microsoft Dynamics 365", src: "/integrations/ms-dynamics.svg" },
-  { name: "Odoo", src: "/integrations/odoo.svg" },
-  { name: "Sage", src: "/integrations/sage.svg" },
-  { name: "Zoho One", src: "/integrations/zoho-one.svg" },
-  { name: "Salesforce", src: "/integrations/salesforce.svg" },
+  { name: "SAP",        src: "/integrations/sap.svg",        color: "#0FAAFF" },
+  { name: "Odoo",       src: "/integrations/odoo.svg",       color: "#9C7BB8" },
+  { name: "Sage",       src: "/integrations/sage.svg",       color: "#00D639" },
+  { name: "Zoho",       src: "/integrations/zoho.svg",       color: "#E42527" },
+  { name: "QuickBooks", src: "/integrations/quickbooks.svg", color: "#2CA01C" },
+  { name: "Xero",       src: "/integrations/xero.svg",       color: "#13B5EA" },
 ];
 
 const integrationsRowB = [
-  { name: "Zoho CRM", src: "/integrations/zoho-crm.svg" },
-  { name: "Zoho Books", src: "/integrations/zoho-books.svg" },
-  { name: "Qoyod", src: "/integrations/qoyod.svg" },
-  { name: "Daftra", src: "/integrations/daftra.svg" },
-  { name: "ZATCA e-Invoice", src: "/integrations/zatca.svg" },
-  { name: "WhatsApp Business", src: "/integrations/whatsapp-business.svg" },
-  { name: "HubSpot", src: "/integrations/hubspot.svg" },
+  { name: "HubSpot",   src: "/integrations/hubspot.svg",   color: "#FF7A59" },
+  { name: "Notion",    src: "/integrations/notion.svg",    color: "#FFFFFF" },
+  { name: "Airtable",  src: "/integrations/airtable.svg",  color: "#18BFFF" },
+  { name: "Stripe",    src: "/integrations/stripe.svg",    color: "#9C97FF" },
+  { name: "Mailchimp", src: "/integrations/mailchimp.svg", color: "#FFE01B" },
+  { name: "WhatsApp",  src: "/integrations/whatsapp.svg",  color: "#25D366" },
 ];
 
 function IntegrationsSection() {
@@ -188,8 +186,16 @@ function IntegrationsSection() {
           <div className="marquee-row overflow-hidden" dir="ltr">
             <div className="marquee-track marquee-track-ltr">
               {[...integrationsRowA, ...integrationsRowA].map((logo, i) => (
-                <div key={`a-${i}`} className="logo-mark" aria-label={logo.name}>
-                  <img src={logo.src} alt={logo.name} />
+                <div
+                  key={`a-${i}`}
+                  className="logo-mark"
+                  aria-label={logo.name}
+                  style={{ ["--brand" as string]: logo.color } as React.CSSProperties}
+                >
+                  <span
+                    className="logo-mark-img"
+                    style={{ ["--mask" as string]: `url(${logo.src})` } as React.CSSProperties}
+                  />
                 </div>
               ))}
             </div>
@@ -197,8 +203,16 @@ function IntegrationsSection() {
           <div className="marquee-row overflow-hidden" dir="ltr">
             <div className="marquee-track marquee-track-rtl">
               {[...integrationsRowB, ...integrationsRowB].map((logo, i) => (
-                <div key={`b-${i}`} className="logo-mark" aria-label={logo.name}>
-                  <img src={logo.src} alt={logo.name} />
+                <div
+                  key={`b-${i}`}
+                  className="logo-mark"
+                  aria-label={logo.name}
+                  style={{ ["--brand" as string]: logo.color } as React.CSSProperties}
+                >
+                  <span
+                    className="logo-mark-img"
+                    style={{ ["--mask" as string]: `url(${logo.src})` } as React.CSSProperties}
+                  />
                 </div>
               ))}
             </div>
