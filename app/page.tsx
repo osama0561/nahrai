@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import {
   Zap, Link2, Brain, Globe,
-  Truck, Building2, ShoppingCart, Briefcase, BarChart3, Users,
+  BarChart3, Users,
   ArrowLeft, Bot, Workflow, AppWindow, TrendingUp, Lightbulb,
   CheckCircle, Lock
 } from "lucide-react";
@@ -284,44 +284,6 @@ function WhatWeBuildSection() {
   );
 }
 
-// ─── PHILOSOPHY ───────────────────────────────────────────────────────────────
-function PhilosophySection() {
-  const ref = useRef<HTMLElement>(null);
-  useEffect(() => {
-    const load = async () => {
-      const { gsap } = await import("gsap");
-      const { ScrollTrigger } = await import("gsap/ScrollTrigger");
-      gsap.registerPlugin(ScrollTrigger);
-      gsap.fromTo(ref.current?.querySelectorAll(".phil-word") || [], { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.5, stagger: 0.08, ease: "power2.out", scrollTrigger: { trigger: ref.current, start: "top 70%" } });
-    };
-    load();
-  }, []);
-
-  const words = [
-    { text: "نهر", blue: false }, { text: "يبني:", blue: false },
-    { text: "بنية", blue: true }, { text: "مؤسسية", blue: true },
-    { text: "لا", blue: true }, { text: "تستطيع", blue: true },
-    { text: "العمل", blue: true }, { text: "بدونها.", blue: true },
-  ];
-
-  return (
-    <section ref={ref} className="py-28 px-6 relative overflow-hidden" style={{ background: "linear-gradient(180deg, #020B19 0%, #001830 50%, #020B19 100%)" }}>
-      <div className="absolute inset-0 opacity-5 pointer-events-none" style={{ backgroundImage: "radial-gradient(circle at 30% 50%, #00A3FF 0%, transparent 60%), radial-gradient(circle at 70% 50%, #0050A0 0%, transparent 60%)" }} />
-      <div className="max-w-5xl mx-auto text-center relative z-10">
-        <p className="text-base mb-10" style={{ color: "rgba(240,244,255,0.45)" }}>معظم الوكالات تبيع: أدوات تُضاف إلى الفوضى.</p>
-        <div className="font-serif leading-tight" style={{ fontSize: "clamp(2.5rem, 6vw, 5.5rem)", fontFamily: "'Noto Naskh Arabic', serif", fontStyle: "italic" }}>
-          {words.map((w, i) => (
-            <span key={i} className="phil-word inline-block mx-1" style={{ opacity: 0, color: w.blue ? "#00A3FF" : "#F0F4FF", textShadow: w.text === "أنظمة" ? "0 0 30px rgba(0,163,255,0.5)" : "none" }}>
-              {w.text}
-            </span>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-
 // ─── PACKAGES ─────────────────────────────────────────────────────────────────
 
 // ─── WHY STAY ─────────────────────────────────────────────────────────────────
@@ -365,50 +327,6 @@ function WhyStaySection() {
           <p className="text-sm flex items-center justify-center gap-2" style={{ color: "#00A3FF", fontFamily: "IBM Plex Mono" }}>
             <Lock size={13} /> بنية تتراكم قيمتها — لا مصروف يتكرر.
           </p>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// ─── WHO WE SERVE ─────────────────────────────────────────────────────────────
-const sectors = [
-  { icon: Truck, label: "اللوجستيات والنقل", desc: "أساطيل، شحن، سلاسل توريد" },
-  { icon: Building2, label: "العقارات والتطوير", desc: "مطورون، وسطاء، إدارة أصول" },
-  { icon: ShoppingCart, label: "التوزيع والتجارة", desc: "موزعون، مستوردون، تجار جملة" },
-  { icon: Briefcase, label: "الخدمات المهنية", desc: "استشارات، محاسبة، قانون، هندسة" },
-];
-
-function WhoWeServeSection() {
-  const ref = useRef<HTMLElement>(null);
-  useEffect(() => {
-    const load = async () => {
-      const { gsap } = await import("gsap");
-      const { ScrollTrigger } = await import("gsap/ScrollTrigger");
-      gsap.registerPlugin(ScrollTrigger);
-      gsap.fromTo(ref.current?.querySelectorAll(".sector-card") || [], { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, duration: 0.6, stagger: 0.1, ease: "back.out(1.4)", scrollTrigger: { trigger: ref.current, start: "top 80%" } });
-    };
-    load();
-  }, []);
-
-  return (
-    <section ref={ref} className="py-24 px-6" style={{ background: "#0A1628" }}>
-      <div className="max-w-5xl mx-auto text-center">
-        <p className="text-sm mb-3" style={{ color: "#00A3FF", fontFamily: "IBM Plex Mono" }}>من نخدم</p>
-        <h2 className="text-3xl md:text-4xl font-bold mb-4">شركات B2B ذات العمليات المعقدة</h2>
-        <p className="text-base mb-12 max-w-2xl mx-auto" style={{ color: "rgba(240,244,255,0.6)" }}>
-          عميلنا المثالي: شركات من ١٠ ملايين ريال سنوياً فأعلى — تملك عمليات معقدة وأنظمة متعددة تحتاج إلى توحيد وأتمتة حقيقية، لا مجرد أدوات إضافية.
-        </p>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {sectors.map((s, i) => (
-            <div key={i} className="sector-card card-hover p-6 rounded-[1.5rem] flex flex-col items-center gap-3" style={{ background: "#020B19", border: "1px solid rgba(0,163,255,0.12)", opacity: 0 }}>
-              <div className="w-14 h-14 rounded-2xl flex items-center justify-center" style={{ background: "rgba(0,163,255,0.1)" }}>
-                <s.icon size={26} color="#00A3FF" />
-              </div>
-              <p className="font-semibold text-sm">{s.label}</p>
-              <p className="text-xs" style={{ color: "rgba(240,244,255,0.45)" }}>{s.desc}</p>
-            </div>
-          ))}
         </div>
       </div>
     </section>
@@ -561,10 +479,8 @@ export default function HomePage() {
       <ProblemSection />
       <IntegrationsSection />
       <WhatWeBuildSection />
-      <PhilosophySection />
       <WhyStaySection />
       <CaseStudiesSection />
-      <WhoWeServeSection />
       <CTAStrip />
     </>
   );
