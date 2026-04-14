@@ -4,17 +4,17 @@ import Link from "next/link";
 import { Target, Eye, Award, Shield, Building2, ArrowLeft } from "lucide-react";
 
 const values = [
-  { icon: Eye, title: "شفافية كاملة", desc: "تقارير واضحة، مؤشرات قابلة للقياس، لا مصطلحات مبهمة. تعرف دائماً ما الذي يُبنى وما هي النتيجة." },
-  { icon: Award, title: "جودة قياسية", desc: "كل نظام نسلّمه يجتاز معايير جودة صارمة. لا نشر جزئي، لا وعود بدون تنفيذ." },
-  { icon: Target, title: "نتائج مثبتة", desc: "قياس ROI حقيقي لكل نظام. إذا لم يحقق النظام النتائج المتفق عليها، نعيد بناءه." },
-  { icon: Shield, title: "شراكة طويلة الأمد", desc: "لسنا مورداً — نحن جزء من فريقك التشغيلي. نجاحك هو نجاحنا بالمعنى الحرفي." },
+  { icon: Eye, title: "شفافية مؤسسية كاملة", desc: "تقارير تكامل واضحة، مؤشرات قابلة للقياس، ومستندات تقنية لكل API ومسار بيانات. تعرف بالضبط ما الذي يتدفق بين أنظمتك." },
+  { icon: Award, title: "هندسة على مستوى المؤسسات", desc: "كل تكامل يجتاز معايير صارمة: أمان البيانات، استرجاع الأخطاء، التوثيق، والاختبار قبل النشر. لا حلول هشّة، لا مفاجآت في الإنتاج." },
+  { icon: Target, title: "ROI مرتبط بأنظمتك", desc: "نقيس قيمة كل تكامل بالأرقام: ساعات يدوية مُلغاة، أخطاء بشرية مُزالة، سرعة تنفيذ مضاعفة. نتائج موثقة لا وعود." },
+  { icon: Shield, title: "شراكة طويلة الأمد", desc: "لسنا مورّداً يسلّم مشروعاً وينصرف. نحن جزء من فريقك التقني — نراقب، نُحسّن، ونُوسّع التكاملات مع نمو شركتك." },
 ];
 
 const teamMembers = [
-  { name: "مدير المشاريع", role: "قيادة التنفيذ والتواصل مع العملاء", initials: "م" },
-  { name: "مهندس الذكاء الاصطناعي", role: "بناء وكلاء الذكاء الاصطناعي وأنظمة الأتمتة", initials: "ذ" },
-  { name: "مطور التطبيقات", role: "بناء التطبيقات الداخلية وواجهات المستخدم", initials: "ت" },
-  { name: "مستشار النمو", role: "استراتيجية التسويق وبنية النمو الرقمي", initials: "ن" },
+  { name: "مدير حسابات المؤسسات", role: "قيادة التنفيذ والتواصل مع فِرق العميل التقنية والتشغيلية", initials: "م" },
+  { name: "مهندس تكامل الأنظمة", role: "ربط ERP و CRM وبناء طبقات الأتمتة بين الأنظمة المؤسسية", initials: "ت" },
+  { name: "مهندس الذكاء الاصطناعي", role: "بناء وكلاء AI يعملون فوق بياناتك وأنظمتك الحالية", initials: "ذ" },
+  { name: "مطور التطبيقات الداخلية", role: "بناء بوابات وداشبوردات تنفيذية موحّدة من مصادر متعددة", initials: "ط" },
 ];
 
 export default function AboutPage() {
@@ -42,10 +42,10 @@ export default function AboutPage() {
               <p className="about-hero text-sm mb-4" style={{ color: "#00A3FF", fontFamily: "IBM Plex Mono", opacity: 0 }}>من نحن</p>
               <h1 className="about-hero text-4xl md:text-6xl font-bold mb-6 leading-tight" style={{ opacity: 0 }}>
                 لسنا وكالة —{" "}
-                <span style={{ color: "#00A3FF" }} className="text-glow">نحن شريك تشغيلي</span>
+                <span style={{ color: "#00A3FF" }} className="text-glow">نحن فريق التكامل المؤسسي لشركتك</span>
               </h1>
               <p className="about-hero text-base leading-relaxed" style={{ color: "rgba(240,244,255,0.65)", opacity: 0 }}>
-                نهر AI ليست وكالة تبيع مشاريع تنتهي. نحن نبني البنية التشغيلية الرقمية لشركتك — ثم نديرها معك على المدى الطويل.
+                نهر AI تبني طبقة الأتمتة والتكامل التي تربط ERP و CRM وكل أنظمتك في منظومة واحدة — للشركات السعودية من ١٠ ملايين ريال سنوياً فأعلى. نبني، ندير، ونُحسّن باستمرار.
               </p>
             </div>
             <div className="about-hero" style={{ opacity: 0 }}>
@@ -69,13 +69,13 @@ export default function AboutPage() {
           </div>
           <div className="space-y-6 text-base leading-loose" style={{ color: "rgba(240,244,255,0.7)" }}>
             <p>
-              رأينا عشرات الشركات السعودية في قطاعات B2B المختلفة تعاني من نفس المشكلة: تملك عمليات ضخمة، فرقاً متمرسة، وعملاء محترمين — لكنها تعمل بأدوات متفرقة وعمليات يدوية تستنزف طاقتها وتبطّئ نموها.
+              رأينا عشرات الشركات السعودية الكبيرة والمتوسطة تشترك في نفس المعاناة: SAP في وادٍ، Zoho في وادٍ، ملفات Excel في وادٍ ثالث — وفرق كاملة تُدخل البيانات يدوياً بين الأنظمة. شركات تملك أدوات قوية، لكن لا منظومة موحّدة.
             </p>
             <p>
-              الحل الموجود في السوق كان إما أدوات جاهزة لا تناسب طبيعة العمل السعودي، أو مشاريع تقنية باهظة تنتهي دون نتائج ملموسة. لم يكن هناك من يبني ويدير ويحسّن باستمرار بجانب الشركة.
+              الحل المتاح في السوق كان إما "إضافة أداة جديدة" تزيد الفوضى، أو مشاريع تكامل كبرى تنتهي بمستندات ولا تعمل في الإنتاج. لم يكن هناك فريق متخصص يبني التكاملات، يديرها، ويُحسّنها مع نمو الشركة.
             </p>
             <p>
-              أنشأنا نهر AI لملء هذا الفراغ. نموذجنا بسيط: عقد سنوي يشمل البناء والنشر والإدارة والتحسين المستمر — لأي شركة B2B تريد أن تتحرك أسرع، تخسر أقل، وتنمو بشكل مستدام.
+              أنشأنا نهر AI لملء هذا الفراغ. نموذجنا: عقد سنوي يشمل ربط أنظمتك المؤسسية، بناء طبقة الأتمتة والذكاء الاصطناعي فوقها، وإدارتها باستمرار — لأي شركة سعودية تريد أن تجعل بياناتها وأدواتها تعمل كمنظومة واحدة بلا لمسة يدوية.
             </p>
           </div>
         </div>
@@ -112,26 +112,26 @@ export default function AboutPage() {
               <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-6 electric-glow" style={{ background: "rgba(0,163,255,0.15)" }}>
                 <Building2 size={30} color="#00A3FF" />
               </div>
-              <p className="text-sm mb-3" style={{ color: "#00A3FF", fontFamily: "IBM Plex Mono" }}>لماذا B2B</p>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">العمليات المعقدة = أكبر فرصة</h2>
+              <p className="text-sm mb-3" style={{ color: "#00A3FF", fontFamily: "IBM Plex Mono" }}>لماذا المؤسسات</p>
+              <h2 className="text-3xl md:text-4xl font-bold mb-6">الأنظمة المتعددة = أكبر فرصة تكامل</h2>
               <div className="space-y-4 text-base leading-relaxed" style={{ color: "rgba(240,244,255,0.7)" }}>
                 <p>
-                  شركات B2B تملك أعمق العمليات وأكثرها تكراراً — وهذا بالضبط ما يجعل الأتمتة هنا ذات ROI ضخم وقابل للقياس بوضوح.
+                  الشركات المؤسسية تملك أعمق الأنظمة وأكثرها قيمة — ERP، CRM، أنظمة محاسبة، منصات لوجستية. لكن قوة هذه الأنظمة لا تتحقق إلا حين تتحدث مع بعضها كمنظومة واحدة.
                 </p>
                 <p>
-                  سواء كانت شركة لوجستيات، مطوراً عقارياً، موزعاً، أو مكتب استشارات — كل شركة B2B تملك عشرات العمليات اليدوية التي يمكن أتمتتها اليوم.
+                  سواء كنت تستخدم SAP، Oracle، Microsoft Dynamics، Zoho، Odoo، NetSuite، أو Sage — نحن نربطها مع أدواتك اليومية ونبني فوقها طبقة ذكاء اصطناعي تجعل البيانات تتدفق تلقائياً بين الأقسام.
                 </p>
                 <p>
-                  نموذجنا يعمل عبر القطاعات لأننا نبني حول طبيعة عمل شركتك تحديداً — لا حلولاً جاهزة تناسب الجميع ولا تناسب أحداً.
+                  نموذجنا يعمل عبر القطاعات لأن مبدأ التكامل واحد: نقرأ بنيتك التقنية الحالية، نحدد نقاط الاحتكاك، ونبني الجسور الذكية بينها — بلا استبدال غير ضروري ولا فوضى انتقالية.
                 </p>
               </div>
             </div>
             <div className="space-y-4">
               {[
-                { label: "المهام اليدوية المتكررة", val: "تُلغى بالكامل" },
-                { label: "سرعة الرد على العملاء", val: "فوري ٢٤/٧" },
-                { label: "التقارير والمتابعة", val: "تلقائية بدون جهد" },
-                { label: "تكاليف التشغيل", val: "تنخفض بشكل قابل للقياس" },
+                { label: "ربط ERP و CRM والأنظمة المحاسبية", val: "منظومة موحّدة" },
+                { label: "الإدخال اليدوي بين الأنظمة", val: "يُلغى بالكامل" },
+                { label: "توافق فاتورة و ZATCA", val: "آلي ١٠٠٪" },
+                { label: "التقارير التنفيذية الموحّدة", val: "في لوحة واحدة" },
               ].map((item, i) => (
                 <div key={i} className="flex items-center justify-between p-5 rounded-xl" style={{ background: "rgba(2,11,25,0.5)", border: "1px solid rgba(0,163,255,0.15)" }}>
                   <span className="text-sm" style={{ color: "rgba(240,244,255,0.7)" }}>{item.label}</span>
@@ -149,7 +149,7 @@ export default function AboutPage() {
           <div className="text-center mb-12">
             <p className="text-sm mb-3" style={{ color: "#00A3FF", fontFamily: "IBM Plex Mono" }}>الفريق</p>
             <h2 className="text-3xl md:text-4xl font-bold mb-4">الفريق الذي يبني معك</h2>
-            <p className="text-base" style={{ color: "rgba(240,244,255,0.55)" }}>متخصصون في الذكاء الاصطناعي، الأتمتة، والنمو الرقمي للسوق السعودي</p>
+            <p className="text-base" style={{ color: "rgba(240,244,255,0.55)" }}>متخصصون في تكامل الأنظمة المؤسسية، أتمتة العمليات، ووكلاء الذكاء الاصطناعي للسوق السعودي</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {teamMembers.map((m, i) => (
@@ -168,8 +168,8 @@ export default function AboutPage() {
       {/* CTA */}
       <section className="py-24 px-6 text-center" style={{ background: "#020B19" }}>
         <div className="max-w-3xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">هل شركتك جاهزة للتحول؟</h2>
-          <p className="text-base mb-10" style={{ color: "rgba(240,244,255,0.55)" }}>نفهم عملياتك ونريك ما يمكن تحويله.</p>
+          <h2 className="text-3xl md:text-4xl font-bold mb-6">هل أنظمتك جاهزة للتحدث مع بعضها؟</h2>
+          <p className="text-base mb-10" style={{ color: "rgba(240,244,255,0.55)" }}>نحلل بنيتك التقنية الحالية ونرسم لك خارطة التكامل خلال جلسة واحدة.</p>
           <div className="flex flex-wrap gap-4 justify-center">
             <button onClick={() => window.dispatchEvent(new CustomEvent("open-consultation"))} className="btn-primary text-base py-4 px-8">
               <span>احجز استشارة</span>

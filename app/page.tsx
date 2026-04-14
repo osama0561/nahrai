@@ -215,11 +215,11 @@ function IntegrationsSection() {
 
 // ─── WHAT WE BUILD ────────────────────────────────────────────────────────────
 const services = [
-  { icon: Bot, title: "وكلاء الذكاء الاصطناعي", subtitle: "يعملون باستقلالية داخل شركتك", desc: "وكلاء ذكاء اصطناعي متخصصون يعملون على مدار الساعة: متابعة العملاء عبر واتساب، تحليل السوق والمنافسين تلقائياً، إدارة الحملات التسويقية، وتوليد تقارير الأداء.", examples: ["وكيل واتساب يرد ويتابع تلقائياً", "تحليل تنافسي أسبوعي آلي", "وكيل حملات بريد إلكتروني ذكي", "مساعد داخلي للفريق"] },
+  { icon: Bot, title: "وكلاء الذكاء الاصطناعي المؤسسيون", subtitle: "يعملون فوق ERP و CRM وبياناتك الفعلية", desc: "وكلاء AI مربوطون مباشرة بأنظمتك المؤسسية — يقرؤون من ERP، يكتبون في CRM، يفتحون الفواتير، يحدّثون المخزون، ويتخذون قرارات مدروسة بناءً على سياق شركتك الكامل بدون نسخ يدوي.", examples: ["وكيل واتساب مرتبط بـ CRM لحظياً", "وكيل مبيعات يفتح الصفقات في ERP", "وكيل تقارير تنفيذية يومية", "مساعد داخلي يقرأ بياناتك الفعلية"] },
   { icon: Workflow, title: "أنظمة الأتمتة المؤسسية", subtitle: "نربط ERP و CRM وكل أدواتك", desc: "نربط أنظمتك المؤسسية معاً — SAP، Oracle، Microsoft Dynamics، Zoho، Odoo، NetSuite، Sage — ونبني فوقها طبقة أتمتة وذكاء اصطناعي تلغي العمل اليدوي، وتجعل بياناتك تتحرك بسلاسة بين الأقسام بدون تدخل بشري.", examples: ["تكامل ERP ⇄ CRM ⇄ واتساب في نظام واحد", "مزامنة البيانات بين الأنظمة لحظياً", "أتمتة الفواتير والتحصيل وZATCA", "تقارير تنفيذية موحّدة من كل مصادرك"] },
-  { icon: AppWindow, title: "التطبيقات الداخلية", subtitle: "مبنية حول طريقة عمل شركتك", desc: "نبني تطبيقات ويب مخصصة تعكس عملياتك الفعلية — لا حلول جاهزة، بل أنظمة مصممة لك تحديداً.", examples: ["بوابات العملاء الذكية", "لوحات تتبع السائقين", "أنظمة إدارة الطلبات", "داشبورد عمليات مركزي"] },
-  { icon: TrendingUp, title: "بنية النمو", subtitle: "يحول حضورك الرقمي لآلة توليد عملاء", desc: "نبني الجهاز الرقمي الكامل الذي يجلب لك عملاء جدد باستمرار — مواقع، صفحات هبوط، بريد بارد آلي، ومحتوى LinkedIn.", examples: ["مواقع عالية التحويل", "صفحات هبوط مُحسّنة", "نظام بريد بارد آلي", "١٦ منشور LinkedIn شهرياً"] },
-  { icon: Lightbulb, title: "الاستشارة الاستراتيجية", subtitle: "قرارات صح في الذكاء الاصطناعي", desc: "نجلس معك شهرياً لمراجعة الأداء، تحديد الفرص الجديدة، ورسم خارطة الطريق للربع القادم.", examples: ["جلسات استراتيجية شهرية", "مراجعة الأداء والمؤشرات", "خارطة طريق الذكاء الاصطناعي", "توصيات تقنية مخصصة"] },
+  { icon: AppWindow, title: "البوابات والداشبوردات الموحّدة", subtitle: "تجمع بيانات أنظمتك المؤسسية في مكان واحد", desc: "بوابات وداشبوردات داخلية مربوطة مباشرة بـ ERP و CRM والأنظمة المحاسبية عبر API آمنة. صلاحيات دقيقة لكل دور، تحديث لحظي، ولا نسخ يدوي بين الشاشات.", examples: ["بوابة العملاء الموحّدة", "داشبورد تنفيذي 360°", "بوابة الموردين والمشتريات", "إدارة العمليات الميدانية"] },
+  { icon: TrendingUp, title: "بنية النمو المؤسسية", subtitle: "تربط توليد العملاء مباشرة بـ CRM والمبيعات", desc: "نمو حقيقي للمؤسسات: مواقع B2B تنفيذية، حملات Outbound مرتبطة بـ CRM، تأهيل آلي للعملاء بالذكاء الاصطناعي، وتقارير ROI موصولة بأنظمة المبيعات الفعلية.", examples: ["موقع B2B موصول بـ CRM", "حملات Outbound مؤتمتة", "تأهيل عملاء بالذكاء الاصطناعي", "تقارير ROI تنفيذية"] },
+  { icon: Lightbulb, title: "استشارة بنية المؤسسة الرقمية", subtitle: "قرارات تكامل وذكاء اصطناعي مبنية على أنظمتك الفعلية", desc: "جلسات شهرية مبنية على فحص حقيقي لـ ERP والـ CRM وأدواتك المؤسسية. نُخبرك بصراحة ما يستحق الاستثمار، وما يجب إيقافه، وما يمكن تحسينه فوراً — بدون بيع ولا تحيّز لمورّد.", examples: ["جلسة بنية تقنية شهرية", "تقرير ROI لكل تكامل", "خارطة طريق ٩٠ يوم", "تقييم مستقل لمورّدي ERP"] },
 ];
 
 function WhatWeBuildSection() {
@@ -242,7 +242,7 @@ function WhatWeBuildSection() {
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
           <p className="text-sm mb-3" style={{ color: "#00A3FF", fontFamily: "IBM Plex Mono" }}>ما الذي نبنيه</p>
-          <h2 className="text-3xl md:text-5xl font-bold">ما الذي نبنيه داخل شركتك</h2>
+          <h2 className="text-3xl md:text-5xl font-bold">خمس طبقات تجعل أنظمتك تعمل كمنظومة واحدة</h2>
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
           <div className="lg:col-span-2 flex flex-col gap-2">
@@ -308,7 +308,7 @@ function PhilosophySection() {
     <section ref={ref} className="py-28 px-6 relative overflow-hidden" style={{ background: "linear-gradient(180deg, #020B19 0%, #001830 50%, #020B19 100%)" }}>
       <div className="absolute inset-0 opacity-5 pointer-events-none" style={{ backgroundImage: "radial-gradient(circle at 30% 50%, #00A3FF 0%, transparent 60%), radial-gradient(circle at 70% 50%, #0050A0 0%, transparent 60%)" }} />
       <div className="max-w-5xl mx-auto text-center relative z-10">
-        <p className="text-base mb-10" style={{ color: "rgba(240,244,255,0.45)" }}>معظم الوكالات تبيع: مشاريع تنتهي.</p>
+        <p className="text-base mb-10" style={{ color: "rgba(240,244,255,0.45)" }}>معظم الوكالات تبيع: أدوات تُضاف إلى الفوضى.</p>
         <div className="font-serif leading-tight" style={{ fontSize: "clamp(2.5rem, 6vw, 5.5rem)", fontFamily: "'Noto Naskh Arabic', serif", fontStyle: "italic" }}>
           {words.map((w, i) => (
             <span key={i} className="phil-word inline-block mx-1" style={{ opacity: 0, color: w.blue ? "#00A3FF" : "#F0F4FF", textShadow: w.text === "أنظمة" ? "0 0 30px rgba(0,163,255,0.5)" : "none" }}>
@@ -341,15 +341,15 @@ function WhyStaySection() {
     <section ref={ref} className="py-24 px-6" style={{ background: "linear-gradient(135deg, #003070 0%, #0050A0 50%, #002850 100%)" }}>
       <div className="max-w-5xl mx-auto text-center">
         <p className="text-sm mb-3" style={{ color: "rgba(240,244,255,0.6)", fontFamily: "IBM Plex Mono" }}>ما يحدث بعد ٩٠ يوماً</p>
-        <h2 className="text-3xl md:text-5xl font-bold mb-4">شركتك تتحرك بسرعة مختلفة</h2>
+        <h2 className="text-3xl md:text-5xl font-bold mb-4">شركتك تعمل كمنظومة واحدة</h2>
         <p className="text-base mb-12 max-w-2xl mx-auto" style={{ color: "rgba(240,244,255,0.6)" }}>
-          خلال ٩٠ يوماً من بدء العمل، ترى فريقك يركز على ما يهم — لا على المهام المتكررة.
+          خلال ٩٠ يوماً من بدء العمل، أنظمتك تتحدث مع بعضها، وفريقك يتوقف عن إدخال البيانات بين الشاشات.
         </p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
           {[
-            { icon: Zap, title: "فريق أسرع وأكثر تركيزاً", text: "المهام اليدوية المتكررة تختفي — فريقك يركز على القرارات والنمو." },
-            { icon: Users, title: "عملاء جدد بشكل منتظم", text: "منظومة توليد عملاء تعمل تلقائياً — استفسارات مؤهلة تصلك باستمرار." },
-            { icon: BarChart3, title: "رؤية كاملة على الأداء", text: "تقارير وداشبوردات تلقائية تعطيك وضوحاً تاماً لاتخاذ قرارات أسرع." },
+            { icon: Zap, title: "بياناتك تتدفق آلياً بين الأنظمة", text: "ERP و CRM والمحاسبة مزامنة لحظياً — لا إدخال يدوي مزدوج، لا أخطاء بشرية، لا تأخير." },
+            { icon: Users, title: "وكلاء AI يعملون فوق أنظمتك", text: "وكلاء يقرؤون من بياناتك الفعلية ويتخذون قرارات حقيقية — لا روبوتات معزولة." },
+            { icon: BarChart3, title: "رؤية تنفيذية موحّدة", text: "داشبورد واحد يجمع كل المؤشرات من كل الأنظمة — قرارات مبنية على رؤية كاملة." },
           ].map((item, i) => (
             <div key={i} className="p-8 rounded-[1.5rem] flex flex-col items-center gap-4 text-center" style={{ background: "rgba(2,11,25,0.4)", border: "1px solid rgba(240,244,255,0.1)" }}>
               <div className="w-14 h-14 rounded-2xl flex items-center justify-center" style={{ background: "rgba(0,163,255,0.15)" }}>
@@ -361,9 +361,9 @@ function WhyStaySection() {
           ))}
         </div>
         <div className="p-6 rounded-2xl inline-block" style={{ background: "rgba(2,11,25,0.5)", border: "1px solid rgba(240,244,255,0.15)" }}>
-          <p className="text-base mb-2" style={{ color: "rgba(240,244,255,0.8)" }}>الأنظمة التي نبنيها تنمو مع شركتك — وتزيد قيمتها مع الوقت.</p>
+          <p className="text-base mb-2" style={{ color: "rgba(240,244,255,0.8)" }}>التكاملات التي نبنيها تتعمّق مع نمو شركتك — وتزيد قيمتها مع كل نظام جديد يُربط بها.</p>
           <p className="text-sm flex items-center justify-center gap-2" style={{ color: "#00A3FF", fontFamily: "IBM Plex Mono" }}>
-            <Lock size={13} /> استثمار يتضاعف — لا مصروف يتكرر.
+            <Lock size={13} /> بنية تتراكم قيمتها — لا مصروف يتكرر.
           </p>
         </div>
       </div>
@@ -433,9 +433,9 @@ function CaseStudiesSection() {
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
           <p className="text-sm mb-3" style={{ color: "#00A3FF", fontFamily: "IBM Plex Mono" }}>نتائج حقيقية</p>
-          <h2 className="text-3xl md:text-5xl font-bold mb-4">عملاء بنوا معنا</h2>
+          <h2 className="text-3xl md:text-5xl font-bold mb-4">شركات بنينا معها بنية موحّدة</h2>
           <p className="text-base max-w-xl mx-auto" style={{ color: "rgba(240,244,255,0.55)" }}>
-            لا وعود — نتائج موثقة من شركات عملت معنا فعلاً.
+            لا وعود — أنظمة موثّقة في الإنتاج عند شركات عملت معنا فعلاً.
           </p>
         </div>
 
@@ -539,8 +539,8 @@ function CTAStrip() {
     <section className="py-24 px-6 text-center" style={{ background: "#020B19" }}>
       <div className="max-w-3xl mx-auto">
         <h2 className="text-3xl md:text-5xl font-bold mb-6 leading-tight">
-          شركتك تستحق بنية تحتية{" "}
-          <span style={{ color: "#00A3FF" }} className="text-glow">حقيقية</span>
+          شركتك تستحق منظومة{" "}
+          <span style={{ color: "#00A3FF" }} className="text-glow">موحّدة</span>
         </h2>
         <p className="text-base mb-10" style={{ color: "rgba(240,244,255,0.55)" }}>
           نحلل بنيتك التقنية ونُظهر لك بالضبط ما يمكن ربطه وأتمتته خلال ٩٠ يوماً.

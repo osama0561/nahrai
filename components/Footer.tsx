@@ -21,9 +21,9 @@ export default function Footer() {
               <span className="font-mono text-sm px-2 py-0.5 rounded-lg" style={{ background: "rgba(0,163,255,0.15)", color: "#00A3FF" }}>AI</span>
             </div>
             <p className="text-sm leading-relaxed" style={{ color: "rgba(240,244,255,0.55)" }}>
-              البنية التحتية التي تعمل عليها شركتك.
+              نربط ERP و CRM وكل أدواتك في منظومة واحدة.
               <br />
-              وكالة أتمتة بعقود سنوية.
+              تكامل وأتمتة على مستوى المؤسسات — بعقود سنوية.
             </p>
           </div>
 
@@ -50,7 +50,7 @@ export default function Footer() {
             <h4 className="font-semibold mb-4 text-sm" style={{ color: "#00A3FF" }}>تواصل معنا</h4>
             <div className="space-y-2 text-sm" style={{ color: "rgba(240,244,255,0.55)" }}>
               <p>المملكة العربية السعودية</p>
-              <p>متخصصون في قطاع اللوجستيات و B2B</p>
+              <p>تكامل الأنظمة المؤسسية للشركات السعودية</p>
             </div>
           </div>
         </div>
